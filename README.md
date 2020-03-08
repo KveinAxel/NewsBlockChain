@@ -22,7 +22,7 @@
 
 ## TODO
 - [ ] 篡改检测(@XuanLaoYee）
-- [ ] 关键词查找（@lichangguisheng）
+- [@lichangguisheng ] 关键词查找（@lichangguisheng）
 - [ ] 区块链的建立和优化（@DctorWei1314）
 - [ ] 数据压缩（@panruotong）
 - [ ] GUI（@KveinAxel）
