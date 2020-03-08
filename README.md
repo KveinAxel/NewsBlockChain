@@ -21,7 +21,7 @@
 魏武才（@DctorWei1314）
 
 ## TODO
-- [ ] 篡改检测(@XuanLaoYee）
+- [ @XuanLaoYee] 设计数据存储结构、算法进行篡改检测和篡改查询(@XuanLaoYee）
 - [@lichangguisheng ] 关键词查找（@lichangguisheng）
 - [ ] 区块链的建立和优化（@DctorWei1314）
 - [@panruotong ] 数据压缩 利用哈夫曼编码对新闻进行压缩和解压缩（@panruotong）
