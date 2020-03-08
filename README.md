@@ -24,7 +24,7 @@
 - [ ] 篡改检测(@XuanLaoYee）
 - [@lichangguisheng ] 关键词查找（@lichangguisheng）
 - [ ] 区块链的建立和优化（@DctorWei1314）
-- [ ] 数据压缩（@panruotong）
+- [@panruotong ] 数据压缩 利用哈夫曼编码对新闻进行压缩和解压缩（@panruotong）
 - [ ] GUI（@KveinAxel）
 - [ ] 哈希函数的调研与选择（Olivia0206）
 
