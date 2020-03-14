@@ -4,6 +4,8 @@
 
 本项目为windows程序设计
 
+本项目API文档：https://www.showdoc.cc/NewsBlockChainAPI
+
 ## 组队成员
 
 *排名不分先后*
