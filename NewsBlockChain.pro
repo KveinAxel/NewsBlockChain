@@ -1,8 +1,7 @@
 TARGET = NewsBlockChain
 TEMPLATE = app
-QT       += core gui network sql
+QT       += core network
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
@@ -22,12 +21,10 @@ SOURCES += \
     src/controller/BaseController.cpp \
 
 HEADERS += \
-    src/ui/mainwindow.h \
     src/controller/BaseController.h \
 
 
 FORMS += \
-    src/ui/mainwindow.ui \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
