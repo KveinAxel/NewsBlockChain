@@ -1,40 +1,36 @@
 TARGET = NewsBlockChain
 TEMPLATE = app
 QT       += core network
-
-
-CONFIG += c++11
-
-# The following define makes your compiler emit warnings if you use
-# any Qt feature that has been marked deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
-
-# You can also make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+CONFIG += console
 
 SOURCES += \
+    src/Global.cpp \
+    src/Router.cpp \
     src/main.cpp \
     src/controller/BaseController.cpp \
+    src/util/Fileutil.cpp \
     src/util/Hash.cpp \
     src/util/Haffman.cpp \
-    src/util/MerkleTree.cpp \
+    src/util/MerkleTree.cpp \ \
+    src/util/NetworkUtil.cpp \
+    src/util/StringUtil.cpp
 
 HEADERS += \
+    src/Global.h \
+    src/Router.h \
     src/controller/BaseController.h \
+    src/util/Fileutil.h \
     src/util/Hash.h \
     src/util/Haffman.h \
-    src/util/MerkleTree.h \
+    src/util/MerkleTree.h \ \
+    src/util/NetworkUtil.h \
+    src/util/StringUtil.h
 
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+OTHER_FILES += etc/*
+
 
 include(lib/QtWebApp/logging/logging.pri)
 include(lib/QtWebApp/httpserver/httpserver.pri)
 include(lib/QtWebApp/templateengine/templateengine.pri)
+# Not used: include(lib/QtWebApp/qtservice/qtservice.pri)
