@@ -20,7 +20,7 @@
 
 李畅（@lichangguisheng）
 
-魏武才（@DctorWei1314）
+魏武才（@DctorWei1314），，
 
 ## TODO
 - [ ] 设计数据存储结构、算法进行篡改检测和篡改查询(@XuanLaoYee）
