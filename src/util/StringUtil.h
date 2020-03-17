@@ -4,8 +4,7 @@
 #include <QTypeInfo>
 #include <QString>
 
-class StringUtil
-{
+class StringUtil {
 public:
     StringUtil();
 

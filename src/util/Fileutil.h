@@ -3,8 +3,7 @@
 
 #include <QString>
 
-class FileUtil
-{
+class FileUtil {
     FileUtil();
 public:
     static QString readStringFromFile(QString filename);

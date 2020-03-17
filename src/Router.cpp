@@ -8,7 +8,8 @@
 #include "Router.h"
 #include "filelogger.h"
 #include "staticfilecontroller.h"
-
+#include "controller/currentBlock/CurrentBlockRouter.h"
+#include "controller/generalBlock/GeneralBlockRouter.h"
 Router::Router(QObject *parent) : HttpRequestHandler(parent) {
     qDebug("Router: created");
 }
@@ -25,11 +26,12 @@ void Router::service(HttpRequest &request, HttpResponse &response) {
 
     // 对请求进行匹配以选择控制器或相关Router
 
-    if (path.startsWith("")) {
-//        OauthRouter().service(request, response);
+    if (path.startsWith("/currentBlock/")) {
+        CurrentBlockRouter().service(request, response);
+    } else if(path.startsWith("/generalBlock/")) {
+        GeneralBlockRouter().service(request, response);
     }
-
-        // 其余路径通过静态文件控制器进行处理
+    // 其余路径通过静态文件控制器进行处理
     else {
         staticFileController->service(request, response);
     }
