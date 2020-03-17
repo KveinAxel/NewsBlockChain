@@ -20,7 +20,13 @@
 
 李畅（@lichangguisheng）
 
-魏武才（@DctorWei1314），，
+魏武才（@DctorWei1314）
+
+## 本项目下的其他仓库
+
+NewsBlockChainDNS       : https://github.com/KveinAxel/NewsBlockChainDNS
+
+NewsBlockChainFrontEnd  : https://github.com/KveinAxel/NewsBlockChainFrontEnd
 
 ## TODO
 - [ ] 设计数据存储结构、算法进行篡改检测和篡改查询(@XuanLaoYee）
