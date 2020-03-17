@@ -19,12 +19,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     src/main.cpp \
     src/controller/BaseController.cpp \
+    src/util/Hash.cpp \
+    src/util/Haffman.cpp \
+    src/util/MerkleTree.cpp \
 
 HEADERS += \
     src/controller/BaseController.h \
+    src/util/Hash.h \
+    src/util/Haffman.h \
+    src/util/MerkleTree.h \
 
-
-FORMS += \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
