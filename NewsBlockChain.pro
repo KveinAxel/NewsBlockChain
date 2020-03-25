@@ -21,10 +21,12 @@ SOURCES += \
     src/service/MerkleTreeService.cpp \
     src/util/Fileutil.cpp \
     src/util/Hash.cpp \
-    src/util/Haffman.cpp \
     src/util/MerkleTree.cpp \ \
     src/util/NetworkUtil.cpp \
-    src/util/StringUtil.cpp
+    src/util/StringUtil.cpp \
+    src/util/huffmantree.cpp \
+    src/util/bitio.cpp \
+    src/util/huffman.cpp
 
 HEADERS += \
     src/Global.h \
@@ -43,10 +45,12 @@ HEADERS += \
     src/service/MerkleTreeService.h \
     src/util/Fileutil.h \
     src/util/Hash.h \
-    src/util/Haffman.h \
     src/util/MerkleTree.h \ \
     src/util/NetworkUtil.h \
-    src/util/StringUtil.h
+    src/util/StringUtil.h \
+    src/util/huffmantree.h \
+    src/util/bitio.h \
+    src/util/huffman.h
 
 
 OTHER_FILES += etc/*
