@@ -16,7 +16,6 @@ public:
     void DeCompress(char * input, char * output);
     //quint32 reGetCode(Node *root, std::ifstream in);
     static quint32 MAX_NUM;
-
 };
 
 #endif // HUFFMAN_H

@@ -2,6 +2,7 @@ TARGET = NewsBlockChain
 TEMPLATE = app
 QT       += core network
 CONFIG += console
+CONFIG += C++11
 
 SOURCES += \
     src/Global.cpp \

@@ -14,7 +14,7 @@ HuffmanTree::HuffmanTree(quint32 symbolLimit){
     codes = QVector<QString>(symbolLimit,"");
     //lengths = QVector<quint32> (symbolLimit,0);
 }
-QString HuffmanTree::getCode(quint32 sym) const{
+QVector<char> HuffmanTree::getCode(quint32 sym) const{
     return codes.at(sym);
 }
 Node * HuffmanTree::createTree(quint32 *freq){
@@ -43,26 +43,23 @@ Node * HuffmanTree::createTree(quint32 *freq){
     Node * root = temp.node.release();
     return root;
 }
-void HuffmanTree::getCodeTree(Node *node){
-    qDebug()<<"getCode Tree";
-    //QVector <char> path;
-    QQueue <Node *> q;
-    q.push_back(node);
-    while(!q.empty()){
-        Node * temp = q.front();
-        q.pop_front();
-        if(temp->leftChild){
-            temp->leftChild.get()->code = temp->code+ '0';
-            q.push_back(temp->leftChild.get());
-        }
-        if(temp->rightChild){
-            temp->rightChild.get()->code = temp->code+ '1';
-            q.push_back(temp->rightChild.get());
-        }
-        if((temp->leftChild.get() == NULL) && (temp->rightChild.get() == NULL))
-            codes[temp->symbol] = temp->code;
+void HuffmanTree::getCodeTree(Node *node ,QVector <char>& path){
+    if(node == NULL)
+        return;
+    else if((node->leftChild.get() == NULL) &&(node->rightChild.get()==NULL))
+    {
+        codes[node->symbol] = path;
     }
-    qDebug()<<"getCode Tree OVER";
+    else
+    {
+        path.push_back(0);
+        getCodeTree(node->leftChild.get(),path);
+        path.pop_back();
+
+        path.push_back(1);
+        getCodeTree(node->rightChild.get(),path);
+        path.pop_back();
+    }
 }
 
 bool Node_freq::operator <(const Node_freq & other)const{
