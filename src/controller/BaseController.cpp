@@ -1,48 +1,35 @@
 #include "BaseController.h"
-#include <QVariant>
-#include <QDateTime>
-#include <QThread>
 #include <ctime>
-#include <QCoreApplication>
 
-BaseController::BaseController() {}
+BaseController::BaseController() = default;
 
-void BaseController::service(HttpRequest &request, HttpResponse &response) {}
+void BaseController::result(httplib::Response &res, const std::string &status, const rapidjson::Value &value) {
+    rapidjson::Document document;
+    auto& allocator = document.GetAllocator();
+    rapidjson::Value resObj(value, allocator);
 
-void BaseController::result(HttpResponse &response, const QString &status, const QJsonObject &jsonResponse) {
-    QJsonObject responseObj = jsonResponse;
+    resObj.AddMember("ts", time(nullptr), allocator);
+    resObj.AddMember("status", status, allocator);
 
-    // 增加通用返回
-    responseObj["ts"] = time(nullptr);
-    responseObj["status"] = status;
-
-    // 构建Json文档
-    QJsonDocument jsonDocument;
-    jsonDocument.setObject(responseObj);
-    QByteArray jsonBytes = jsonDocument.toJson(QJsonDocument::Compact);
-
-    QString strJson(jsonBytes);
-    qDebug() << "Response generated: " << strJson;
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    resObj.Accept(writer);
 
     // 构建返回
-    appendCommonHeader(response);
-    response.setHeader("Content-Type", "application/json; charset=UTF-8");
-    response.write(jsonBytes, true);
+    res.set_content(buffer.GetString(), "application/json");
 }
 
-void BaseController::result(HttpResponse &response, const QJsonObject &jsonResponse) {
-    result(response, "OK", jsonResponse);
+void BaseController::result(httplib::Response &res, const rapidjson::Value &value) {
+    result(res, "OK", value);
 }
 
-void BaseController::error(HttpResponse &response, const QString &code, const QString &info) {
-    result(response, "ERR",
-           {
-                   {"code", code},
-                   {"info", info}
-           });
+void BaseController::error(httplib::Response &res, const std::string &code, const std::string &info) {
+    rapidjson::Document document;
+    rapidjson::Value resObj;
+    resObj.SetObject();
+    resObj.AddMember("code", code, document.GetAllocator());
+    resObj.AddMember("info", info, document.GetAllocator());
+    result(res, "ERR", resObj);
 }
 
-void BaseController::appendCommonHeader(HttpResponse &response) {
-    response.setHeader("Server", QCoreApplication::applicationName().toLatin1());
-    response.setHeader("Access-Control-Allow-Origin", "*");
-}
+void BaseController::service(const httplib::Request &req, httplib::Response &res) {}

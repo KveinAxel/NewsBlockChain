@@ -1,42 +1,24 @@
-/**
-  @file
-  @author Stefan Frings
-*/
+#ifndef ROUTER_H
+#define ROUTER_H
 
-#ifndef REQUESTMAPPER_H
-#define REQUESTMAPPER_H
+#include "../ext/cpp-httplib/httplib.h"
 
-#include "httprequesthandler.h"
-
-using namespace stefanfrings;
-
-/**
- * 对HTTP请求按照Path进行分发
- */
-class Router : public HttpRequestHandler {
-    Q_OBJECT
-    Q_DISABLE_COPY(Router)
-
+class Router{
+protected:
+    httplib::Server *server;
 public:
 
     /**
-      构造器
-      @param parent 父对象
-    */
-    Router(QObject *parent = nullptr);
+     * 构造器
+     * @param server 服务器实例指针
+     */
+    explicit Router(httplib::Server *server);
 
     /**
-      析构器
-    */
-    ~Router();
-
-    /**
-      按路径分发
-      @param request 请求信息
-      @param response 待构造的返回信息
-    */
-    void service(HttpRequest &request, HttpResponse &response);
+     * 路径注册
+     */
+    virtual void routeRegister();
 
 };
 
-#endif // REQUESTMAPPER_H
+#endif // ROUTER_H
