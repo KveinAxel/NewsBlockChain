@@ -7,16 +7,14 @@ project(news_block_chain VERSION 1.0)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# add config
-configure_file(src/config/CMakeConfig.h.in CMakeConfig.h)
-
 # add lib
 add_subdirectory(ext)
+link_libraries(ws2_32 wsock32)
 
 # add src
 file(GLOB_RECURSE src_files "src/*.c" "src/*.cc" "src/*.cpp" "src/*.h" "src/*.hpp")
 list(REMOVE_ITEM src_files "${CMAKE_SOURCE_DIR}/src/main.cpp")
-add_executable(news_block_chain src/main.cpp ${src_files} src/config/CMakeConfig.h.in)
+add_executable(news_block_chain src/main.cpp ${src_files})
 target_include_directories(news_block_chain PUBLIC src)
 
 # test

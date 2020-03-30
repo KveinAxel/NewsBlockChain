@@ -1,3 +1,4 @@
+# test
 option(TEST "unit tests" ON)
 if(TEST)
 

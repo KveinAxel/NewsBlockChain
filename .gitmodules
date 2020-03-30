@@ -1,3 +1,9 @@
 [submodule "ext/gtest"]
 	path = ext/gtest
 	url = https://github.com/google/googletest.git
+[submodule "ext/cpp-httplib"]
+	path = ext/cpp-httplib
+	url = https://github.com/yhirose/cpp-httplib.git
+[submodule "ext/rapidjson"]
+	path = ext/rapidjson
+	url = https://github.com/Tencent/rapidjson.git
