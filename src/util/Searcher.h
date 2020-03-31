@@ -33,4 +33,4 @@ public:
      */
     virtual search_result& Keyword_Search(string block_header,const vector<string>&keywords_list)=0;
 };
-#endif SEARCHER_H
+#endif // SEARCHER_H

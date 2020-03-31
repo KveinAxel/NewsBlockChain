@@ -5,7 +5,7 @@
 #ifndef PART1_SEARCH_RESULT_IMPL_H
 #define PART1_SEARCH_RESULT_IMPL_H
 
-#include "Searcher.h"
+#include "../util/Searcher.h"
 #include <map>
 #include <algorithm>
 using std::map;
