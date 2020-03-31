@@ -24,15 +24,23 @@
 
 ## 本项目下的其他仓库
 
-NewsBlockChainDNS       : https://github.com/KveinAxel/NewsBlockChainDNS
+[NewsBlockChainDNS](https://github.com/KveinAxel/NewsBlockChainDNS)
 
-NewsBlockChainFrontEnd  : https://github.com/KveinAxel/NewsBlockChainFrontEnd
+[NewsBlockChainFrontEnd](https://github.com/KveinAxel/NewsBlockChainFrontEnd)
+
+## 感谢
+
+[gtest](https://github.com/google/googletest.git)
+
+[cpp-httplib](https://github.com/yhirose/cpp-httplib.git)
+
+[rapidjson](https://github.com/Tencent/rapidjson.git)
 
 ## TODO
 - [ ] 设计数据存储结构、算法进行篡改检测和篡改查询(@XuanLaoYee）
 - [ ] 关键词查找（@lichangguisheng）
 - [ ] 区块链的建立和优化（@DctorWei1314）
-- [ ] 数据压缩 利用哈夫曼编码对新闻进行压缩和解压缩（@panruotong）
+- [x] 数据压缩 利用哈夫曼编码对新闻进行压缩和解压缩（@panruotong）
 - [ ] GUI（@KveinAxel）
 - [ ] 哈希函数的调研与选择 调研一下主流的哈希函数例如MD5,SHA-256等，了解原理并实现，自主设计哈希函数（@Olivia0206）
 
