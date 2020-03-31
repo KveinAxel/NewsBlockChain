@@ -1,21 +1,20 @@
 #ifndef HUFFMAN_H
 #define HUFFMAN_H
 
-#include "huffmantree.h"
-#include "bitio.h"
+#include "HuffmanTree.h"
+#include "BitIo.h"
 
 class Huffman
 {
 public:
 
-    HuffmanTree * huffmantree;
-    BitIo * bitio;
+    HuffmanTree * huffmanTree;
+    BitIo * bitIo{};
 public:
     Huffman();
     void Compress(char * input, char * output);
     void DeCompress(char * input, char * output);
-    //quint32 reGetCode(Node *root, std::ifstream in);
-    static quint32 MAX_NUM;
+    static constexpr int32_t MAX_NUM = 257;
 };
 
 #endif // HUFFMAN_H

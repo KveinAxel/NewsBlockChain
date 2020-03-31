@@ -1,5 +1,5 @@
-#ifndef BITIO_H
-#define BITIO_H
+#ifndef BIT_IO_H
+#define BIT_IO_H
 
 #include <fstream>
 
@@ -19,4 +19,4 @@ public:
     void write(int b);
 };
 
-#endif // BITIO_H
+#endif // BIT_IO_H

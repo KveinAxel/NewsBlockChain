@@ -1,7 +1,6 @@
-#include "bitio.h"
+#include "BitIo.h"
 
 #include <limits>
-#include <QDebug>
 BitIo::BitIo(std::ifstream &in,std::ofstream &out): input(in),output(out), temp(0), bitOff(0),bitIn(0){}
 
 int BitIo::read(){
@@ -9,7 +8,6 @@ int BitIo::read(){
         return -1;
     if(bitOff == 0){
         temp = input.get();
-        //qDebug() << "read"<<temp;
         if(temp == EOF)
             return -1;
         bitOff = 8;
@@ -22,11 +20,9 @@ void BitIo::write(int b){
 
     bitIn++;
     if(bitIn == 8){
-        //qDebug()<<"write"<<temp;
         if (std::numeric_limits<char>::is_signed)
             temp -= (temp >> 7) << 8;
         output.put(static_cast<char>(temp));
-        //qDebug() << static_cast<char>(temp);
         temp = 0;
         bitIn = 0;
     }
