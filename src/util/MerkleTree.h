@@ -1,8 +1,8 @@
-#ifndef MERKLE_TREE_H
-#define MERKLE_TREE_H
+#ifndef NEWS_BLOCK_CHAIN_MERKLE_TREE_H
+#define NEWS_BLOCK_CHAIN_MERKLE_TREE_H
 
 class MerkleTree{
 
 };
 
-#endif // MERKLE_TREE_H
+#endif // NEWS_BLOCK_CHAIN_MERKLE_TREE_H

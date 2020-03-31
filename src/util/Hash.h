@@ -1,5 +1,5 @@
-#ifndef HASH_H
-#define HASH_H
+#ifndef NEWS_BLOCK_CHAIN_HASH_H
+#define NEWS_BLOCK_CHAIN_HASH_H
 
 #include <string>
 
