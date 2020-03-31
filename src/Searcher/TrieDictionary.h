@@ -1,43 +1,87 @@
-//
-// Created by administrator-PC on 2020/3/25.
-//
+#ifndef NEWS_BLOCK_CHAIN_TRIE_DICTIONARY_H
+#define NEWS_BLOCK_CHAIN_TRIE_DICTIONARY_H
 
-#ifndef PART1_TRIEDICTIONARY_H
-#define PART1_TRIEDICTIONARY_H
-
-#include <string.h>
+#include <cstring>
 #include <unordered_map>
 #include <memory>
 #include <vector>
 #include <queue>
 #include <iostream>
 #include <algorithm>
-using namespace std;
+
 /**
- * @author lichangguisheng
- * 构建Tire字典树
+ * 单个节点
  */
-struct DictElem//单个节点
-{
-    string _word;//保存的单字
-    DictElem* fail;//失败指针
-    int _wordId;//在叶子节点中指向表示的单词下标
-    unordered_map<string, shared_ptr<DictElem> > _words;//子节点保存在无序图中
+struct DictElement {
+    /**
+     * 保存的单字
+     */
+    std::string _word;
+
+    /**
+     * 失败指针
+     */
+    DictElement *fail;
+
+    /**
+     * 在叶子节点中指向表示的单词下标
+     */
+    int _wordId;
+
+    /**
+     * 子节点保存在无序图中
+     */
+    std::unordered_map<std::string, std::shared_ptr<DictElement> > _words;
 };
-typedef shared_ptr<DictElem> pDictElem;
-//字典类
+
+typedef std::shared_ptr<DictElement> pDictElem;
+
+/**
+ * 字典类
+ */
 class TrieDictionary {
-    typedef unordered_map<string, pDictElem>::iterator WordIt;
 public:
+    typedef std::unordered_map<std::string, pDictElem>::iterator WordIt;
     TrieDictionary();
-    void push(const string & word, int location);//插入一个词
-    void push(vector<string> & words);//插入一组词
-    void build_failure_pointer();//建立失败指针
-    int find(const string& text,vector<vector<int>>& location_list);//查找函数
+
+    /**
+     * 插入一个词
+     * @param word
+     * @param location
+     */
+    void push(const std::string &word, int location);
+
+    /**
+     * 插入一组词
+     * @param words
+     */
+    void push(std::vector<std::string> &words);
+
+    /**
+     * 建立失败指针
+     */
+    void build_failure_pointer();
+
+    /**
+     * 查找函数
+     * @param text
+     * @param location_list
+     * @return
+     */
+    int find(const std::string &text, std::vector<std::vector<int>> &location_list);
 private:
-    void splitWord(const string & word, vector<string> & characters);//把词拆成字
-    pDictElem _dictionary;//字典树的根节点
+
+    /**
+     * 把词拆成字
+     * @param word
+     * @param characters
+     */
+    static void splitWord(const std::string &word, vector<std::string> &characters);
+
+    /**
+     * 字典树的根节点
+     */
+    pDictElem _dictionary;
 };
 
-
-#endif //PART1_TRIEDICTIONARY_H
+#endif // NEWS_BLOCK_CHAIN_TRIE_DICTIONARY_H

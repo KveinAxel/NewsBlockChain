@@ -1,24 +1,27 @@
-//
-// Created by administrator-PC on 2020/3/25.
-//
-
-#ifndef PART1_SEARCHERIMPL_H
-#define PART1_SEARCHERIMPL_H
+#ifndef NEWS_BLOCK_CHAIN_SEARCHER_IMPL_H
+#define NEWS_BLOCK_CHAIN_SEARCHER_IMPL_H
 
 #include "../util/Searcher.h"
 #include "TrieDictionary.h"
+
 /**
  * 搜索器的实现类
  */
 class SearcherImpl: public searcher {
 private:
-    TrieDictionary* dictionary;
+    TrieDictionary* dictionary{};
 public:
     SearcherImpl();
-    void setDictionary(TrieDictionary *dictionary);//注入字典类后使用
-    //搜索函数（差其它组件配合还没写完）
-    search_result& Keyword_Search(string block_header,const vector<string>&keywords_list);
+
+    /**
+     * 注入字典类后使用
+     * @param dictionary
+     */
+    void setDictionary(TrieDictionary *dictionary);
+
+    // todo 搜索函数
+    search_result& Keyword_Search(string block_header,const vector<string>&keywords_list) override;
 };
 
 
-#endif //PART1_SEARCHERIMPL_H
+#endif //NEWS_BLOCK_CHAIN_SEARCHER_IMPL_H

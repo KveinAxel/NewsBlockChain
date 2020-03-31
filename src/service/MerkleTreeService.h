@@ -1,5 +1,5 @@
-#ifndef MERKLETREESERVICE_H
-#define MERKLETREESERVICE_H
+#ifndef NEWS_BLOCK_CHAIN_MERKLETREE_SERVICE_H
+#define NEWS_BLOCK_CHAIN_MERKLETREE_SERVICE_H
 
 
 class MerkleTreeService
@@ -8,4 +8,4 @@ public:
     MerkleTreeService();
 };
 
-#endif // MERKLETREESERVICE_H
+#endif // NEWS_BLOCK_CHAIN_MERKLETREE_SERVICE_H

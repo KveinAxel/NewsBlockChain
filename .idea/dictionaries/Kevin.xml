@@ -5,6 +5,7 @@
       <w>httplib</w>
       <w>lichangguisheng</w>
       <w>merkle</w>
+      <w>merkletree</w>
       <w>rapidjson</w>
       <w>unformatted</w>
       <w>wsock</w>

@@ -1,5 +1,5 @@
-#ifndef INFO_CONTROLLER_H
-#define INFO_CONTROLLER_H
+#ifndef NEWS_BLOCK_CHAIN_INFO_CONTROLLER_H
+#define NEWS_BLOCK_CHAIN_INFO_CONTROLLER_H
 #include "../BaseController.h"
 
 class InfoController: public BaseController {
@@ -9,4 +9,4 @@ public:
     void service(const httplib::Request &req, httplib::Response &res) override;
 };
 
-#endif // INFO_CONTROLLER_H
+#endif // NEWS_BLOCK_CHAIN_INFO_CONTROLLER_H

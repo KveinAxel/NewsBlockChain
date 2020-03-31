@@ -1,5 +1,5 @@
-#ifndef BLOCK_ROUTER_H
-#define BLOCK_ROUTER_H
+#ifndef NEWS_BLOCK_CHAIN_BLOCK_ROUTER_H
+#define NEWS_BLOCK_CHAIN_BLOCK_ROUTER_H
 #include "Router.h"
 
 class BlockRouter : public Router {
@@ -16,4 +16,4 @@ public:
     void routeRegister() override;
 };
 
-#endif // BLOCK_ROUTER_H
+#endif // NEWS_BLOCK_CHAIN_BLOCK_ROUTER_H

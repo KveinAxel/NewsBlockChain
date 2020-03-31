@@ -1,5 +1,5 @@
-#ifndef LIST_HASH_CONTROLLER_H
-#define LIST_HASH_CONTROLLER_H
+#ifndef NEWS_BLOCK_CHAIN_LIST_HASH_CONTROLLER_H
+#define NEWS_BLOCK_CHAIN_LIST_HASH_CONTROLLER_H
 
 #include "../BaseController.h"
 
@@ -9,4 +9,4 @@ public:
 
     void service(const httplib::Request &req, httplib::Response &res) override;
 };
-#endif // LIST_HASH_CONTROLLER_H
+#endif // NEWS_BLOCK_CHAIN_LIST_HASH_CONTROLLER_H

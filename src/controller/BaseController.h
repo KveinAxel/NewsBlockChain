@@ -1,5 +1,5 @@
-#ifndef BASE_CONTROLLER_H
-#define BASE_CONTROLLER_H
+#ifndef NEWS_BLOCK_CHAIN_BASE_CONTROLLER_H
+#define NEWS_BLOCK_CHAIN_BASE_CONTROLLER_H
 
 #include "../../ext/cpp-httplib/httplib.h"
 #include "../../ext/rapidjson/include/rapidjson/document.h"
@@ -43,4 +43,4 @@ public:
     static void result(httplib::Response &res, const std::string &status, const rapidjson::Value &value);
 };
 
-#endif // BASE_CONTROLLER_H
+#endif // NEWS_BLOCK_CHAIN_BASE_CONTROLLER_H

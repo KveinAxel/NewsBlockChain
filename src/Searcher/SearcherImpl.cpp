@@ -1,16 +1,14 @@
-//
-// Created by administrator-PC on 2020/3/25.
-//
-
 #include "SearcherImpl.h"
-SearcherImpl::SearcherImpl() {
+#include "Search_Result_impl.h"
 
+SearcherImpl::SearcherImpl() = default;
+
+void SearcherImpl::setDictionary(TrieDictionary *dict) {
+    SearcherImpl::dictionary = dict;
 }
-void SearcherImpl::setDictionary(TrieDictionary *dictionary) {
-    SearcherImpl::dictionary = dictionary;
-}
+
 search_result& SearcherImpl::Keyword_Search(string block_header, const vector<string> &keywords_list) {
-
+    return *(new Search_Result_impl);
 }
 
 
