@@ -1,5 +1,5 @@
-#ifndef ROUTER_H
-#define ROUTER_H
+#ifndef NEWS_BLOCK_CHAIN_ROUTER_H
+#define NEWS_BLOCK_CHAIN_ROUTER_H
 
 #include "../ext/cpp-httplib/httplib.h"
 
@@ -21,4 +21,4 @@ public:
 
 };
 
-#endif // ROUTER_H
+#endif // NEWS_BLOCK_CHAIN_ROUTER_H

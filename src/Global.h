@@ -1,7 +1,3 @@
-//
-// Created by Kevin on 2020/3/30.
-//
-
 #ifndef NEWS_BLOCK_CHAIN_GLOBAL_H
 #define NEWS_BLOCK_CHAIN_GLOBAL_H
 
