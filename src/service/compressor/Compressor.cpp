@@ -2,7 +2,7 @@
 #include <utility>
 #include "Compressor.h"
 #include "Global.h"
-
+#include <algorithm>
 
 Compressor::Compressor(std::string data) : data(std::move(data)) {
     this->huffmanTree = new HuffmanTree(MAX_NUM);
@@ -96,7 +96,7 @@ void Compressor::decompress() {
             this->bytes[i] >>= 1u;
             bit++;
         }
-        std::reverse(tmp.begin(), tmp.end());
+        reverse(tmp.begin(), tmp.end());
         str += tmp;
     }
 
