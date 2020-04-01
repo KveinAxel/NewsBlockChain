@@ -9,8 +9,8 @@ Compressor::Compressor(std::string data) : data(std::move(data)) {
     this->compressorType = 0;
 }
 
-Compressor::Compressor(std::string serializedDict, std::vector<uint32_t> bytes)
-        : serializedDict(std::move(serializedDict)), bytes(std::move(bytes)) {
+Compressor::Compressor(std::string serializedDict, std::vector<uint32_t> bytes, uint32_t filler)
+        : serializedDict(std::move(serializedDict)), bytes(std::move(bytes)), filler(filler) {
     this->huffmanTree = new HuffmanTree(MAX_NUM);
     this->compressorType = 1;
 }

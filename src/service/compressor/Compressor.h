@@ -60,7 +60,7 @@ public:
      * @param serializedDict 序列化字典
      * @param bytes 字节数组
      */
-    explicit Compressor(std::string serializedDict, std::vector<uint32_t> bytes);
+    explicit Compressor(std::string serializedDict, std::vector<uint32_t> bytes, uint32_t filler);
 
     /**
      * 压缩
