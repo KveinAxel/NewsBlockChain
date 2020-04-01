@@ -22,12 +22,12 @@ target_include_directories(news_block_chain PUBLIC src)
 
 # test
 #add_coverage(news_block_chain)
-#
-#enable_testing()
-#option(BUILD_TEST "unit tests" ON)
-#if(BUILD_TEST)
-#    add_subdirectory(test)
-#endif()
+
+enable_testing()
+option(BUILD_TEST "unit tests" ON)
+if(BUILD_TEST)
+    add_subdirectory(test)
+endif()
 
 # evaluate coverage
 #coverage_evaluate()

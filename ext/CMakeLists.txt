@@ -1,5 +1,3 @@
-include_directories(rapidjson/include)
-
 # For unit test
 option(BUILD_TEST "unit tests" ON)
 if(BUILD_TEST)

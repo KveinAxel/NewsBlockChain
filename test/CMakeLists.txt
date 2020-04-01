@@ -11,8 +11,6 @@ if (BUILD_TEST)
 
     add_definitions(-D UNIT_TEST)
 
-    include_directories(../ext/gtest/googletest/include)
-
     add_executable(unit_test ${test_codes} ${src_files})
     target_include_directories(unit_test PUBLIC
             ../src)
@@ -33,6 +31,3 @@ if (BUILD_TEST)
         target_compile_options(unit_test PRIVATE -g -Wall -Wextra -Wpedantic)
     endif ()
 endif ()
-
-
-
