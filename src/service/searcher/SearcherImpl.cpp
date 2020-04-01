@@ -7,7 +7,7 @@ void SearcherImpl::setDictionary(TrieDictionary *dict) {
     SearcherImpl::dictionary = dict;
 }
 
-search_result& SearcherImpl::Keyword_Search(string block_header, const vector<string> &keywords_list) {
+search_result& SearcherImpl::Keyword_Search(std::string block_header, const std::vector<std::string> &keywords_list) {
     return *(new Search_Result_impl);
 }
 

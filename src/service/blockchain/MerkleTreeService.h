@@ -2,8 +2,7 @@
 #define NEWS_BLOCK_CHAIN_MERKLETREE_SERVICE_H
 
 
-class MerkleTreeService
-{
+class MerkleTreeService {
 public:
     MerkleTreeService();
 };

@@ -1,5 +1,7 @@
 #include "Global.h"
 
+Global *Global::global = nullptr;
+
 httplib::Server *Global::getServer() {
     return this->server;
 }
@@ -17,13 +19,12 @@ Global::~Global() {
 }
 
 LOGGER::CLogger *Global::getLogger() {
-    return this->logger
+    return this->logger;
 }
 
 Global *Global::getGlobal() {
     if (nullptr == Global::global) {
         global = new Global();
-    } else {
-        return global;
     }
+    return global;
 }

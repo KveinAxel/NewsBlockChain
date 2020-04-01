@@ -1,7 +1,7 @@
 #ifndef NEWS_BLOCK_CHAIN_SEARCHER_IMPL_H
 #define NEWS_BLOCK_CHAIN_SEARCHER_IMPL_H
 
-#include "../util/Searcher.h"
+#include "Searcher.h"
 #include "TrieDictionary.h"
 
 /**
@@ -20,7 +20,7 @@ public:
     void setDictionary(TrieDictionary *dictionary);
 
     // todo 搜索函数
-    search_result& Keyword_Search(string block_header,const vector<string>&keywords_list) override;
+    search_result& Keyword_Search(std::string block_header,const std::vector<std::string>&keywords_list) override;
 };
 
 

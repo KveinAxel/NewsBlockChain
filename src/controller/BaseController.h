@@ -1,10 +1,10 @@
 #ifndef NEWS_BLOCK_CHAIN_BASE_CONTROLLER_H
 #define NEWS_BLOCK_CHAIN_BASE_CONTROLLER_H
 
-#include "../../ext/cpp-httplib/httplib.h"
-#include "../../ext/rapidjson/include/rapidjson/document.h"
-#include "../../ext/rapidjson/include/rapidjson/writer.h"
-#include "../../ext/rapidjson/include/rapidjson/stringbuffer.h"
+#include "httplib.h"
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
 
 class BaseController {
 public:
@@ -40,7 +40,7 @@ public:
      * @param response HttpResponse对象
      * @param jsonResponse 待返回的Json数据
      */
-    static void result(httplib::Response &res, const std::string &status, const rapidjson::Value &value);
+    static void result(httplib::Response &res, const std::string& status, const rapidjson::Value &value);
 };
 
 #endif // NEWS_BLOCK_CHAIN_BASE_CONTROLLER_H

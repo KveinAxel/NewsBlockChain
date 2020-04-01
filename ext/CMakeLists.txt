@@ -1,9 +1,11 @@
-# test
-option(TEST "unit tests" ON)
-if(TEST)
+include_directories(rapidjson/include)
+
+# For unit test
+option(BUILD_TEST "unit tests" ON)
+if(BUILD_TEST)
 
     # Google Test
-    set(GOOGLETEST_ROOT externals/gtest/googletest CACHE STRING "Google Test source root")
+    set(GOOGLETEST_ROOT ext/gtest/googletest CACHE STRING "Google Test source root")
 
     set(GOOGLETEST_SOURCES
             ${PROJECT_SOURCE_DIR}/${GOOGLETEST_ROOT}/src/gtest-all.cc

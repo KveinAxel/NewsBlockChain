@@ -1,7 +1,7 @@
 #ifndef NEWS_BLOCK_CHAIN_ROUTER_H
 #define NEWS_BLOCK_CHAIN_ROUTER_H
 
-#include "../ext/cpp-httplib/httplib.h"
+#include "httplib.h"
 
 class Router{
 protected:

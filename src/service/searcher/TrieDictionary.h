@@ -76,7 +76,7 @@ private:
      * @param word
      * @param characters
      */
-    static void splitWord(const std::string &word, vector<std::string> &characters);
+    static void splitWord(const std::string &word, std::vector<std::string> &characters);
 
     /**
      * 字典树的根节点

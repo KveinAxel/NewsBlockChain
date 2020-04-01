@@ -1,8 +1,7 @@
-#include <wsman.h>
 #include <unordered_map>
 #include <utility>
 #include "Compressor.h"
-#include "../Global.h"
+#include "Global.h"
 
 
 Compressor::Compressor(std::string data) : data(std::move(data)) {

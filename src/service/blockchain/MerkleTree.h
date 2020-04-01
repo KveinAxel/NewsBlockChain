@@ -1,7 +1,7 @@
 #ifndef NEWS_BLOCK_CHAIN_MERKLE_TREE_H
 #define NEWS_BLOCK_CHAIN_MERKLE_TREE_H
 
-class MerkleTree{
+class MerkleTree {
 
 };
 

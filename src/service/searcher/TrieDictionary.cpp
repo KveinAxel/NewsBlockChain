@@ -9,7 +9,7 @@ TrieDictionary::TrieDictionary() : _dictionary(new DictElement) {
 void TrieDictionary::splitWord(const std::string &word, std::vector<std::string> &characters) {
 
     uint32_t num = word.size();
-    int i = 0;
+    uint32_t i = 0;
     while (i < num) {
         int size = 1;
         uint8_t ch = word[i];

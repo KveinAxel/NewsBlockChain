@@ -1,13 +1,13 @@
 #include "HuffmanTree.h"
-#include "../Global.h"
+#include "Global.h"
 #include <memory>
 #include <queue>
 #include <memory>
 
 Node::Node(uint32_t symbol) : symbol(symbol) {}
 
-Node::Node(uint32_t symbol, std::unique_ptr<Node> &&left, std::unique_ptr<Node> &&right) :
-        symbol(symbol), leftChild(std::move(left)), rightChild(std::move(right)) {}
+Node::Node(uint32_t symbol, Node* left, Node* right) :
+        symbol(symbol), leftChild(left), rightChild(right) {}
 
 std::string Node::serialize() {
     // 其中#表示非叶子节点， $表示空节点
@@ -30,6 +30,8 @@ std::string Node::serialize() {
         res += "$";
     else
         res += this->rightChild->serialize();
+
+    return res;
 }
 
 void Node::build(std::unique_ptr<Node> &head, std::string &serializedDict) {
@@ -60,7 +62,7 @@ Node *Node::deserialize(std::string &serializedDict) {
 }
 
 NodeFrequency::NodeFrequency(Node *node, uint32_t minSymbol, uint32_t frequency) :
-        node(std::unique_ptr<Node>(node)), symbol(minSymbol), frequency(frequency) {}
+        node(node), symbol(minSymbol), frequency(frequency) {}
 
 HuffmanTree::HuffmanTree(uint32_t symbolLimit) {
     codeVector = std::vector<std::string>(symbolLimit, "");
@@ -84,14 +86,12 @@ Node *HuffmanTree::createTree(uint32_t *dict) {
     while (queue.size() > 1) {
 
         // 取出前两个元素
-        NodeFrequency x = std::move(const_cast<NodeFrequency &&>(queue.top()));
-        queue.pop();
-        NodeFrequency y = std::move(const_cast<NodeFrequency &&>(queue.top()));
-        queue.pop();
+        NodeFrequency x = queue.top(); queue.pop();
+        NodeFrequency y = queue.top(); queue.pop();
 
         // 合并节点
         int32_t minSym = std::min(x.symbol, y.symbol);
-        Node *newNode = new Node(minSym, std::move(x.node), std::move(y.node));
+        Node *newNode = new Node(minSym, x.node, y.node);
         NodeFrequency newNodeFrequency(newNode, minSym, x.frequency + y.frequency);
 
         // 放入优先队列
@@ -101,9 +101,8 @@ Node *HuffmanTree::createTree(uint32_t *dict) {
     }
 
     // 取出最后剩下的根节点
-    NodeFrequency temp = std::move(const_cast<NodeFrequency &&>(queue.top()));
-    queue.pop();
-    Node *root = temp.node.release();
+    NodeFrequency temp = queue.top(); queue.pop();
+    Node *root = temp.node;
     return root;
 }
 

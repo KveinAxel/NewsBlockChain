@@ -38,7 +38,7 @@ public:
      * @param left 左子树
      * @param right 右子树
      */
-    explicit Node(uint32_t symbol, std::unique_ptr<Node> &&left, std::unique_ptr<Node> &&right);
+    explicit Node(uint32_t symbol, Node* left, Node* right);
 
     /**
      * 序列化
@@ -62,7 +62,7 @@ public:
     /**
      * 节点
      */
-    std::unique_ptr<Node> node;
+    Node* node;
 
     /**
      * 子节点(如果有)符号较小的

@@ -7,6 +7,7 @@
       <w>merkle</w>
       <w>merkletree</w>
       <w>rapidjson</w>
+      <w>stdstring</w>
       <w>unformatted</w>
       <w>wsock</w>
     </words>
