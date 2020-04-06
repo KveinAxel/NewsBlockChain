@@ -2,8 +2,7 @@
 #include <QDebug>
 quint32 Huffman::MAX_NUM = 257;
 
-Huffman::Huffman(QWidget *parent)
-    : QWidget(parent)
+Huffman::Huffman()
 {
     huffmantree = new HuffmanTree(MAX_NUM);
 }
@@ -29,18 +28,19 @@ void Huffman::Compress(char *input, char *output){
     freq[256]++;
 
     Node * root = huffmantree->createTree(freq);
-    huffmantree->getCodeTree(root);
+    QVector <char> path;
+    huffmantree->getCodeTree(root, path);
     delete root;
-    qDebug()<<"here";
+    //qDebug()<<"here";
     in.clear();
     in.seekg(0);
     //写入频率
-    for (uint32_t i = 0; i < MAX_NUM; i++) {
+    for (quint32 i = 0; i < MAX_NUM; i++) {
         quint32 val = freq[i];
         for (int j = 7; j >= 0; j--)
             bitio->write((val >> j) & 1);
     }
-    qDebug()<<"translate";
+    //qDebug()<<"translate";
     //进行转换
     while(1){
         int symbol = in.get();
@@ -49,22 +49,22 @@ void Huffman::Compress(char *input, char *output){
         for(QChar b : huffmantree->getCode(symbol))
         {
             bitio->write(b.toLatin1());
-            qDebug()<<b;
+            //qDebug()<<b;
 
         }
-        qDebug()<<"----";
+        //qDebug()<<"----";
     }
-    for(QChar b : huffmantree->getCode(256)){
-        bitio->write(b.toLatin1());
-        qDebug()<<b;
+    for(char b : huffmantree->getCode(256)){
+        bitio->write(b);
+        //qDebug()<<b;
        }
-    qDebug()<<"----";
+    //qDebug()<<"----";
     while(bitio->bitIn!= 0)
     {
-        qDebug()<<'0';
+        //qDebug()<<'0';
         bitio->write(0);
     }
-    qDebug()<<"over";
+    //qDebug()<<"over";
     delete bitio;
 }
 void Huffman::DeCompress(char * input,char * output){
@@ -91,13 +91,13 @@ void Huffman::DeCompress(char * input,char * output){
         //得到symbol值
         while(1){
             int temp = bitio->read();
-            qDebug()<<"read temp"<<temp;
+            //qDebug()<<"read temp"<<temp;
             Node * next;
             if(temp == 1)
                 next = current->rightChild.get();
             else
                 next = current->leftChild.get();
-            qDebug()<<"current"<<current->symbol;
+            //qDebug()<<"current"<<current->symbol;
             if((next->leftChild.get() == NULL)&& (next->rightChild.get() == NULL)&& (next)){
                symbol = next->symbol;
                break;
@@ -113,10 +113,5 @@ void Huffman::DeCompress(char * input,char * output){
         //写入symbol
         out.put(static_cast<char>(b));
     }
-    qDebug()<<"out";
-}
-
-Huffman::~Huffman()
-{
-
+    //qDebug()<<"out";
 }

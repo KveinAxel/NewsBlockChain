@@ -5,7 +5,7 @@
 #ifndef PART1_SEARCHERIMPL_H
 #define PART1_SEARCHERIMPL_H
 
-#include "Searcher.h"
+#include "../util/Searcher.h"
 #include "TrieDictionary.h"
 #include "Search_Result_impl.h"
 /**

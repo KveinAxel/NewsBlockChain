@@ -5,6 +5,7 @@
 #include <QVector>
 #include <utility>
 #include <memory>
+
 class Node
 {
 public:
@@ -30,12 +31,12 @@ class HuffmanTree
 {
 public:
     //Node root;
-    QVector<QString> codes;
+    QVector< QVector<char> > codes;
     //QVector<quint32> lengths;
 public:
     HuffmanTree(quint32 symbolLimit);
-    void getCodeTree(Node * node);
-    QString getCode(quint32 sym)const;
+    void getCodeTree(Node * node, QVector<char> &path);
+    QVector<char> getCode(quint32 sym)const;
     Node* createTree(quint32 * freq);
     void simplifytheTree();
     void reGetCode(Node * node);
