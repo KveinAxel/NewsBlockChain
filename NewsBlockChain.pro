@@ -20,6 +20,7 @@ SOURCES += \
     src/main.cpp \
     src/controller/BaseController.cpp \
     src/service/MerkleTreeService.cpp \
+    src/util/Block.cpp \
     src/util/Fileutil.cpp \
     src/util/Hash.cpp \
     src/util/MerkleTree.cpp \ \
@@ -46,6 +47,8 @@ HEADERS += \
     src/controller/generalBlock/ListHashController.h \
     src/controller/generalBlock/SearchBlocksController.h \
     src/service/MerkleTreeService.h \
+    src/util/Block.h \
+    src/util/BlockChain.h \
     src/util/Fileutil.h \
     src/util/Hash.h \
     src/util/MerkleTree.h \ \
