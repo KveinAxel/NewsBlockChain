@@ -69,7 +69,7 @@ void TrieDictionary::push(const string & word, int location)
     }
 }
 
-void TrieDictionary::push(vector<string> & words)
+void TrieDictionary::push(const vector<string> & words)
 {
     int size = words.size();
     for(int i = 0; i < size; ++i)

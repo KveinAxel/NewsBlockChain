@@ -31,7 +31,7 @@ class TrieDictionary {
 public:
     TrieDictionary();
     void push(const string & word, int location);//插入一个词
-    void push(vector<string> & words);//插入一组词
+    void push(const vector<string> & words);//插入一组词
     void build_failure_pointer();//建立失败指针
     int find(const string& text,vector<vector<int>>& location_list);//查找函数
 private:

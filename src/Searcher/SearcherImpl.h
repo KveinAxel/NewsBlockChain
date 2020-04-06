@@ -7,6 +7,7 @@
 
 #include "Searcher.h"
 #include "TrieDictionary.h"
+#include "Search_Result_impl.h"
 /**
  * 搜索器的实现类
  */
@@ -17,7 +18,7 @@ public:
     SearcherImpl();
     void setDictionary(TrieDictionary *dictionary);//注入字典类后使用
     //搜索函数（差其它组件配合还没写完）
-    search_result& Keyword_Search(string block_header,const vector<string>&keywords_list);
+    search_result& Keyword_Search(const string& text,const vector<string>&keywords_list);
 };
 
 
