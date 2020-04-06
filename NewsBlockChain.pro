@@ -27,8 +27,10 @@ SOURCES += \
     src/util/StringUtil.cpp \
     src/util/huffmantree.cpp \
     src/util/bitio.cpp \
-    src/util/huffman.cpp
-
+    src/util/huffman.cpp\
+    src/Searcher/Search_Result_impl.cpp\
+    src/Searcher/SearcherImpl.cpp\
+    src/Searcher/TrieDictionary.cpp
 HEADERS += \
     src/Global.h \
     src/Router.h \
@@ -51,8 +53,11 @@ HEADERS += \
     src/util/StringUtil.h \
     src/util/huffmantree.h \
     src/util/bitio.h \
-    src/util/huffman.h
-
+    src/util/huffman.h\
+    src/util/searcher.h\
+    src/Searcher/Search_Result_impl.h\
+    src/Searcher/SearcherImpl.h\
+    src/Searcher/TrieDictionary.h
 
 OTHER_FILES += etc/*
 
