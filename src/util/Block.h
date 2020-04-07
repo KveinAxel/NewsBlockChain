@@ -23,7 +23,7 @@ public:
     int lastHash;//上一块的哈希
     time_t createTime;//出块时间
     short paragraphNum;//文章段落数
-    int merkleRoot;
+    string merkleRoot;
     MerkleTree* merkletree;//吕民轩请注意这个结构,构造函数中会实例化  merkletree=new MerkleTree（this）;   应该有 QList<bool>
 
     //body部分
