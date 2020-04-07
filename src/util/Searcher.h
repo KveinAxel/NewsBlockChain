@@ -33,6 +33,7 @@ public:
      * @return 返回一个结果对象引用，使用后需手动销毁
      * 一个接口
      */
-    virtual search_result& Keyword_Search(const string& text,const vector<string>&keywords_list)=0;
+    virtual void Enter_Keywords(const vector<string>&keywords_list)=0;//查找前先注入关键词
+    virtual search_result& Keyword_Search(const string& text)=0;
 };
 #endif //PART1_SEARCHER_H
