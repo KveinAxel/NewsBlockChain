@@ -28,7 +28,7 @@ public:
 
     //body部分
     QList<string> article;//文章按段分块
-    int* merkleIndex;//索引哈希指针数组，吕民轩请注意，大小根据paragraphNum及你所定义的结构有关，比如老师的那个pdf的结构，假如4段，则size为6.
+    string* merkleIndex;//索引哈希指针数组，吕民轩请注意，大小根据paragraphNum及你所定义的结构有关，比如老师的那个pdf的结构，假如4段，则size为6.
     //我不知道的new多大，你写完结构我才知道，你merkle tree 的构造函数为block指针（merkleRoot，article，merkleIndex）
 };
 #endif // BLOCKCHAIN_H
