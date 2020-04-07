@@ -11,7 +11,7 @@ public:
         int right;
         std::string hash;
     }TreeNode;
-    QList<bool> modifyCheck(QList<std::string> article,std::string* merkleIndex);//false是指此段被修改
+    QList<bool> modifyCheck(QList<std::string> article,std::string* merkleIndex);//false是指此段被修改,这个数组为段数＋1大小，即下表为0的项直接不作考虑，下表跟段数是直接对应的
     int generateMerkelTreeIntoArray(const QList<std::string> article);//返回值是数组大小
     std::string* getMerkleArray();//需要先调用generateMerkelTreeIntoArray才会分配内存
     ~MerkleTree();

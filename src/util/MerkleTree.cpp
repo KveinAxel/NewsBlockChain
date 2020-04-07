@@ -37,7 +37,7 @@ QList<bool> MerkleTree::modifyCheck(QList<std::string> article, std::string* mer
         }
     }
     QList<bool> output;
-    for(int i=0;i<paraNum;i++){
+    for(int i=0;i<=paraNum;i++){
         output.push_back(true);
     }
     if(nodeList.at(paraNum-1).hash == merkleIndex[paraNum-1]){
