@@ -3,12 +3,11 @@
 #include "QVector"
 #include "QQueue"
 MerkleTree::~MerkleTree() {
-    delete[] merkleArray;
+    delete[] merkleIndex;
 }
-QList<bool> MerkleTree::modifyCheck(QList<std::string> article, std::string* merkleIndex) {
+QList<int> MerkleTree::modifyCheck(QList<std::string> article) {
     int ID = 0;
     int paraNum = article.size();
-    QVector<TreeNode> nodeList;
     for(int i=0;i<paraNum;i++){
         Hash hashCode(article.at(i));
 
@@ -22,25 +21,20 @@ QList<bool> MerkleTree::modifyCheck(QList<std::string> article, std::string* mer
         nodeList.push_back(newTreeNode);
     }
     for(int i=0;i<nodeList.size();i+=2){
-        TreeNode leftNode = nodeList.at(i);
-        TreeNode rightNode = nodeList.at(i+1);
         TreeNode newTreeNode;
-        Hash hashCode(leftNode.hash+rightNode.hash);
+        Hash hashCode(nodeList.at(i).hash+nodeList.at(i+1).hash);
         newTreeNode.hash = hashCode.toString();
         newTreeNode.id = ID++;
-        newTreeNode.left = leftNode.id;
-        newTreeNode.right = rightNode.id;
+        newTreeNode.left = nodeList.at(i).id;
+        newTreeNode.right = nodeList.at(i+1).id;//这样改高效一点，以后编程也要尽量这样，时间上也差不多，应为文章段数比较小
         newTreeNode.para = -1;
         nodeList.push_back(newTreeNode);
-        if(nodeList.size()-i-2 < 2){
+        if(nodeList.size()+1==2*i){
             break;
         }
     }
-    QList<bool> output;
-    for(int i=0;i<=paraNum;i++){
-        output.push_back(true);
-    }
-    if(nodeList.at(paraNum-1).hash == merkleIndex[paraNum-1]){
+    QList<int> output;
+    if(nodeList.last().hash == merkleIndex[nodeList.size()-1]){
         return output;
     } else{
         QQueue<TreeNode> q;
@@ -66,11 +60,9 @@ QList<bool> MerkleTree::modifyCheck(QList<std::string> article, std::string* mer
     }
     return output;
 }
-
-int MerkleTree::generateMerkelTreeIntoArray(const QList<std::string> article) {
+MerkleTree::MerkleTree(const QList<std::string> article,std::string*& merkleArray){
     int ID = 0;
     int paraNum = article.size();
-    QVector<TreeNode> nodeList;
     for(int i=0;i<paraNum;i++){
         Hash hashCode(article.at(i));
 
@@ -81,24 +73,23 @@ int MerkleTree::generateMerkelTreeIntoArray(const QList<std::string> article) {
         nodeList.push_back(newTreeNode);
     }
     for(int i=0;i<nodeList.size();i+=2){
-        TreeNode leftNode = nodeList.at(i);
-        TreeNode rightNode = nodeList.at(i+1);
         TreeNode newTreeNode;
-        Hash hashCode(leftNode.hash+rightNode.hash);
+        Hash hashCode(nodeList.at(i).hash+nodeList.at(i+1).hash);
         newTreeNode.hash = hashCode.toString();
         newTreeNode.id = ID++;
         nodeList.push_back(newTreeNode);
-        if(nodeList.size()-i-2 < 2){
+        if(nodeList.size()+1==2*i){
             break;
         }
     }
     merkleArray = new string[nodeList.size()];
+    this->merkleIndex=merkleArray;
     for(int i=0;i<nodeList.size();i++){
         merkleArray[i] = nodeList.at(i).hash;
     }
-    return ID;
+    //return ID;
 }
 
-std::string * MerkleTree::getMerkleArray() {
-    return merkleArray;
-}
+//std::string * MerkleTree::getMerkleArray() {
+//    return merkleArray;
+//}这个不需要了，我直接在block里掉成员,是我之前搞得有点复杂

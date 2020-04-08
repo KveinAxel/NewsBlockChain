@@ -347,7 +347,7 @@ string Hash::toString(){
 
     string str;
     str.reserve(16 << 1);
-    for (size_t i = 0; i < 16; ++i) {
+    for (size_t i = 0; i < 16; ++i){
         int t = digest_[i];
         int a = t / 16;
         int b = t % 16;

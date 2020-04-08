@@ -1,7 +1,7 @@
 #ifndef BLOCKCHAIN_H
 #define BLOCKCHAIN_H
-#include <QHash>
 #include "Block.h"
+#include <QHash>
 class BlockChain{
 public:
     QHash<int,BlockObj*> blockChainHash;//使用hash来实现链
