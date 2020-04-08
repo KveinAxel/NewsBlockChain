@@ -50,14 +50,14 @@ QList<bool> MerkleTree::modifyCheck(QList<std::string> article, std::string* mer
             q.pop_front();
             if(nodeList[nextSearch.left].hash != merkleIndex[nextSearch.left]){
                 if(nodeList[nextSearch.left].para != -1){
-                    output[nextSearch.left] = false;
+                    output[nextSearch.left+1] = false;
                 }else{
                     q.push_back(nodeList[nextSearch.left]);
                 }
             }
             if(nodeList[nextSearch.right].hash != merkleIndex[nextSearch.right]){
                 if(nodeList[nextSearch.right].para != -1){
-                    output[nextSearch.right] = false;
+                    output[nextSearch.right+1] = false;
                 }else{
                     q.push_back(nodeList[nextSearch.right]);
                 }
