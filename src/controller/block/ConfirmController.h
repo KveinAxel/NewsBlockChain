@@ -3,6 +3,9 @@
 
 #include "../BaseController.h"
 
+/**
+ * 我给你一篇区块链有的文章，你给我检测有没有篡改
+ */
 class ConfirmController: public BaseController {
 public:
     ConfirmController();

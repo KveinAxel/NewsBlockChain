@@ -3,6 +3,9 @@
 
 #include "../BaseController.h"
 
+/**
+ * 查看区块链历史文章
+ */
 class ListHashController: public BaseController {
 public:
     ListHashController();

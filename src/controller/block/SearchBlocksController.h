@@ -3,6 +3,9 @@
 
 #include "../BaseController.h"
 
+/**
+ * 我给你至少三个关键字，你给我统计所有新闻中关键字出现的次数，并返回次数最高的三篇文章
+ */
 class SearchBlocksController: public BaseController {
 public:
     SearchBlocksController();
