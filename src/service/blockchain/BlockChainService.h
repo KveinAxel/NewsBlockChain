@@ -2,6 +2,7 @@
 #define NEWS_BLOCK_CHAIN_BLOCK_CHAIN_SERVICE_H
 
 #include <string>
+#include <service/hash/Hash.h>
 #include "../../Message.h"
 
 class BlockChainService {
@@ -19,6 +20,11 @@ public:
      * @return 无篡改返回200， 有篡改返回400， 其他事件返回500
      */
     static Message<std::string> confirmArticle(std::string article);
+
+    /**
+     * 获取所有区块头哈希及时间
+     */
+     static Message<std::pair<byte, std::string>> list();
 };
 
 
