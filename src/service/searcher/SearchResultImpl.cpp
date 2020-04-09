@@ -1,12 +1,12 @@
-#include "Search_Result_impl.h"
+#include "SearchResultImpl.h"
 
 #include <utility>
 
-void Search_Result_impl::push(std::vector<std::string> &words) {
+void SearchResultImpl::push(std::vector<std::string> &words) {
     keyword_list.assign(words.begin(), words.end());
 }
 
-void Search_Result_impl::insert(std::string hash, int sum, const std::vector<std::vector<int>> &location) {
+void SearchResultImpl::insert(std::string hash, int sum, const std::vector<std::vector<int>> &location) {
     news *np = new news;
     np->hash_code = std::move(hash);
     np->sum = sum;
@@ -20,15 +20,15 @@ void Search_Result_impl::insert(std::string hash, int sum, const std::vector<std
     news_list.push_back(np);
 }
 
-bool cmp(Search_Result_impl::news *a, Search_Result_impl::news *b) {
+bool cmp(SearchResultImpl::news *a, SearchResultImpl::news *b) {
     return a->sum > b->sum;
 }
 
-void Search_Result_impl::Sort() {
+void SearchResultImpl::Sort() {
     sort(news_list.begin(), news_list.end(), cmp);
 }
 
-std::vector <std::string> Search_Result_impl::Get_News_list() {
+std::vector <std::string> SearchResultImpl::Get_News_list() {
     std::vector <std::string> N_list;
     for (auto &it : news_list) {
         N_list.push_back(it->hash_code);
@@ -36,11 +36,11 @@ std::vector <std::string> Search_Result_impl::Get_News_list() {
     return N_list;
 }
 
-std::vector <std::string> Search_Result_impl::Get_Keyword_List() {
+std::vector <std::string> SearchResultImpl::Get_Keyword_List() {
     return keyword_list;
 }
 
-std::vector<int> Search_Result_impl::Get_Location_list(std::string block_header, std::string keyword) {
+std::vector<int> SearchResultImpl::Get_Location_list(std::string block_header, std::string keyword) {
     std::vector<int> location_list;
     for (auto &it : news_list) {
         if (it->hash_code == block_header) {
@@ -56,7 +56,7 @@ std::vector<int> Search_Result_impl::Get_Location_list(std::string block_header,
     return location_list;
 }
 
-void Search_Result_impl::Destruction() {
+void SearchResultImpl::Destruction() {
     if (!news_list.empty())
         for (auto &it : news_list) {
             delete it;

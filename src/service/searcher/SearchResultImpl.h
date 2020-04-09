@@ -1,5 +1,5 @@
-#ifndef NEWS_BLOCK_CHAIN_SEARCH_RESULT_IMPL_H
-#define NEWS_BLOCK_CHAIN_SEARCH_RESULT_IMPL_H
+#ifndef NEWS_BLOCK_CHAIN_SEARCHRESULTIMPL_H
+#define NEWS_BLOCK_CHAIN_SEARCHRESULTIMPL_H
 
 #include "Searcher.h"
 #include <map>
@@ -8,7 +8,7 @@
 /**
  * 搜索结果的实现类
  */
-class Search_Result_impl : public search_result {
+class SearchResultImpl : public SearchResult {
 public:
     struct news {
         /**
@@ -82,4 +82,4 @@ private:
 };
 
 
-#endif //NEWS_BLOCK_CHAIN_SEARCH_RESULT_IMPL_H
+#endif //NEWS_BLOCK_CHAIN_SEARCHRESULTIMPL_H

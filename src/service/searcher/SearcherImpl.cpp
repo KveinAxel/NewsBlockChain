@@ -1,14 +1,29 @@
 #include "SearcherImpl.h"
-#include "Search_Result_impl.h"
+#include "SearchResultImpl.h"
 
-SearcherImpl::SearcherImpl() = default;
+SearcherImpl::SearcherImpl() {
+    TrieDictionary* dictionary1=new TrieDictionary;
+    setDictionary(dictionary1);
+}
 
 void SearcherImpl::setDictionary(TrieDictionary *dict) {
     SearcherImpl::dictionary = dict;
 }
 
-search_result& SearcherImpl::Keyword_Search(std::string block_header, const std::vector<std::string> &keywords_list) {
-    return *(new Search_Result_impl);
+void SearcherImpl::Enter_Keywords(std::vector<std::string> &keywords){
+    keywords_list.assign(keywords.begin(),keywords.end());
+    dictionary->push(keywords);
+    dictionary->build_failure_pointer();
 }
 
+SearchResult& SearcherImpl::Keyword_Search(const std::string& text) {
+    std::vector<std::vector<int>> loca(keywords_list.size());
+    int sum=0;
 
+    sum=dictionary->find(text,loca);
+
+    SearchResultImpl* result=new SearchResultImpl;
+    result->push(keywords_list);
+    result->insert(sum,loca);
+    return *result;
+}

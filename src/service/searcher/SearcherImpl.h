@@ -3,13 +3,16 @@
 
 #include "Searcher.h"
 #include "TrieDictionary.h"
+#include "SearchResultImpl.h"
 
 /**
  * 搜索器的实现类
  */
-class SearcherImpl: public searcher {
+class SearcherImpl: public Searcher {
 private:
-    TrieDictionary* dictionary{};
+    TrieDictionary* dictionary;
+    std::vector<std::string> keywords_list;
+
 public:
     SearcherImpl();
 
@@ -19,8 +22,10 @@ public:
      */
     void setDictionary(TrieDictionary *dictionary);
 
-    // todo 搜索函数
-    search_result& Keyword_Search(std::string block_header,const std::vector<std::string>&keywords_list) override;
+    // todo 搜索函数（差其它组件配合还没写完）
+    void Enter_Keywords(std::vector<std::string> &keywords) override;
+
+    SearchResult& Keyword_Search(const std::string &text) override ;
 };
 
 
