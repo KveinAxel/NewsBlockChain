@@ -2,11 +2,13 @@
   <dictionary name="Kevin">
     <words>
       <w>dbghelp</w>
+      <w>fmix</w>
       <w>httplib</w>
       <w>lichangguisheng</w>
       <w>merkle</w>
       <w>merkletree</w>
       <w>rapidjson</w>
+      <w>rotl</w>
       <w>stdstring</w>
       <w>unformatted</w>
       <w>wsock</w>
