@@ -21,7 +21,7 @@ void BaseController::result(httplib::Response &res, const std::string& status, c
 }
 
 void BaseController::result(httplib::Response &res, const rapidjson::Value &value) {
-    result(res, "OK", value);
+    result(res, "200", value);
 }
 
 void BaseController::error(httplib::Response &res, const std::string &code, const std::string &info) {
@@ -36,4 +36,3 @@ void BaseController::error(httplib::Response &res, const std::string &code, cons
     result(res, "ERR", resObj);
 }
 
-void BaseController::service(const httplib::Request &req, httplib::Response &res) {}

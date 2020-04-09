@@ -18,7 +18,7 @@ public:
      * @param request 请求信息
      * @param response 待构造的返回信息
      */
-     virtual void service(const httplib::Request &req, httplib::Response &res);
+     virtual void service(const httplib::Request &req, httplib::Response &res) = 0;
 
     /**
      * @brief 返回成功调用的Json结果
