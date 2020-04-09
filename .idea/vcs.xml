@@ -2,9 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ext/cpp-httplib" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ext/gtest" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ext/rapidjson" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ext/rapidjson/thirdparty/gtest" vcs="Git" />
   </component>
 </project>

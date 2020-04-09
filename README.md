@@ -28,8 +28,6 @@
 
 2. `cd NewsBlockChain\`
 
-3. `git submodule update --init --recursive`
-
 ## 本项目下的其他仓库
 
 [NewsBlockChainDNS](https://github.com/KveinAxel/NewsBlockChainDNS)
