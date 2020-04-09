@@ -10,25 +10,19 @@
  */
 class SearchResultImpl : public SearchResult {
 public:
-    struct news {
-        /**
-         * 文章哈希值
-         */
-        std::string hash_code;
-
+    struct news{
         /**
          * 单词总数
          */
         int sum;
 
-        std::map<std::string, std::vector<int>> location;
+        std::map<std::string,std::vector<int>> location;
     };
-
     /**
      * 插入一组词
      * @param words
      */
-    void push(std::vector<std::string> &words);
+    void push(const std::vector<std::string> &words);
 
     /**
      *
@@ -36,18 +30,14 @@ public:
      * @param sum
      * @param location
      */
-    void insert(std::string hash, int sum, const std::vector<std::vector<int>> &location);
+    void insert(int sum, const std::vector<std::vector<int>> &location);
 
     /**
-     *
-     */
-    void Sort();
-
-    /**
-     * 按关键词搜索总数从高到低得到新闻区块头列表
+     * 得到所有关键词加起来总数
      * @return
      */
-    std::vector<std::string> Get_News_list() override;
+    int Get_Total() override;
+
 
     /**
      * 得到关键词列表
@@ -56,18 +46,20 @@ public:
     std::vector<std::string> Get_Keyword_List() override;
 
     /**
+     * 得到单个单词数量
+     * @param keyword
+     * @return
+     */
+    virtual int Get_num(std::string keyword) override;
+
+    /**
      * 按新闻区块头和关键词得到区块头指向的新闻中关键词出现的位置列表（关键词开头所在位置）
      * 如果找不到则返回空向量
      * @param block_header
      * @param keyword
      * @return
      */
-    std::vector<int> Get_Location_list(std::string block_header, std::string keyword) override;
-
-    /**
-     * 不再使用时手动销毁这个对象
-     */
-    void Destruction() override;
+    std::vector<int> Get_Location_list(std::string keyword) override;
 
 private:
     /**
@@ -78,7 +70,7 @@ private:
     /**
      * 新闻列表
      */
-    std::vector<news *> news_list;
+    news passage;//新闻列表
 };
 
 

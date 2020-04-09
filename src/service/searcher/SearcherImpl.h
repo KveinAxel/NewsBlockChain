@@ -23,9 +23,8 @@ public:
     void setDictionary(TrieDictionary *dictionary);
 
     // todo 搜索函数（差其它组件配合还没写完）
-    void Enter_Keywords(std::vector<std::string> &keywords) override;
-
-    SearchResult& Keyword_Search(const std::string &text) override ;
+    void Enter_Keywords(const std::vector<std::string> &keywords);
+    SearchResult& Keyword_Search(const std::string &text);
 };
 
 

@@ -55,7 +55,7 @@ public:
      * 插入一组词
      * @param words
      */
-    void push(std::vector<std::string> &words);
+    void push(const std::vector<std::string> &words);
 
     /**
      * 建立失败指针
