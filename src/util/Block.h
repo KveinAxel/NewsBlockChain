@@ -5,17 +5,21 @@
 #include <QList>
 #include <string>
 #include "MerkleTree.h"
+#include <QDebug>
+#include "../Searcher/SearcherImpl.h"
+#include "../Searcher/Search_Result_impl.h"
 using namespace std;
 class BlockObj: public QObject
 {
     Q_OBJECT
 public:
-    BlockObj(int hashKey);//由数据库中的key值连接数据库可得对象，由于我没有权限知道数据库，所以该函数我不会实现
-    //BlockObj(xxx);//参数未填，但并不为空，该函数是请求其他节点的信息，由网络信息的结构来构造，由于不知道网络框架暂时不实现
+    BlockObj(string hashKey);//由数据库中的key值连接数据库可得对象，由于我没有权限知道数据库，所以该函数我不会实现
+    BlockObj();//参数未填，但并不为空，该函数是请求其他节点的信息，由网络信息的结构来构造，由于不知道网络框架暂时不实现
     bool store();//完成block的数据库存储，若数据库中已存在hashkey的，这返回false，并不载入数据库，若之前没有，则调用此函数载入
     string blockArticle();//返回文章的string型，供Keyword_Search（）使用searcher.h中定义
     string blockHead();//返回块头的string型,供取hash
     QList<int> modifyCheck(const QList<std::string> article);//会调用this.merkletree的函数，也是返回QList<int> int为修改过的段，为空则没有错,这个article是外部的，待检测的,还有这是之前是我突然改了接口，传达了错误的信息，所以我会帮改一下代码
+    QList<int> searchKeyword(const vector<string>&keywords_list);//放回关键词在文章中出现的次数的list
     ~BlockObj();
 
 

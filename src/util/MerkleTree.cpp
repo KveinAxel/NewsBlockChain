@@ -86,6 +86,9 @@ MerkleTree::MerkleTree(const QList<std::string> article){
 //    }
     //return ID;
 }
+string MerkleTree::merkleRoot(){
+    return nodeList.last().hash;
+}
 
 //std::string * MerkleTree::getMerkleArray() {
 //    return merkleArray;
