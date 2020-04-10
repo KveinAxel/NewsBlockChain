@@ -23,7 +23,7 @@ SOURCES += \
     src/util/Block.cpp \
     src/util/Fileutil.cpp \
     src/util/Hash.cpp \
-    src/util/MerkleTree.cpp \ \
+    src/util/MerkleTree.cpp \
     src/util/NetworkUtil.cpp \
     src/util/StringUtil.cpp \
     src/util/huffmantree.cpp \
