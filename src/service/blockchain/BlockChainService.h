@@ -25,7 +25,7 @@ public:
     /**
      * 获取所有区块头哈希及时间的列表
      */
-     static Message<std::vector<std::pair<byte, std::string>>> list();
+     static Message<std::vector<std::pair<std::string, time_t>>> list();
 };
 
 

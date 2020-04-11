@@ -16,8 +16,9 @@ void ListHashController::service(const httplib::Request &req, httplib::Response 
             for (auto i: *vec) {
                 rapidjson::Value item;
                 item.SetObject();
-                // todo 把byte改成哈希值
-                item.AddMember("byte", i.first, document.GetAllocator());
+                rapidjson::Value byte;
+                byte.SetString(i.first.c_str(), document.GetAllocator());
+                item.AddMember("byte", byte, document.GetAllocator());
                 item.AddMember("time", i.second, document.GetAllocator());
                 arr.PushBack(item, document.GetAllocator());
             }

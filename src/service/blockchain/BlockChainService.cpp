@@ -10,7 +10,7 @@ Message<std::string> BlockChainService::confirmArticle(std::string article) {
     return Message<std::string>::success(article);
 }
 
-Message<std::vector<std::pair<byte, std::string>>> BlockChainService::list() {
+Message<std::vector<std::pair<std::string, time_t>>> BlockChainService::list() {
     // todo
-    return Message<std::vector<std::pair<byte, std::string>>>::success("成功");
+    return Message<std::vector<std::pair<std::string, time_t>>>::success("成功");
 }
