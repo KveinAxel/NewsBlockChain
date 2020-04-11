@@ -16,7 +16,7 @@ class Hash {
     /**
      * 用于存放这256为bit，用于变化的
      */
-    uint32 state[8];
+    uint32 state[8]{0};
 
     /**
      * 数据的长度
@@ -26,12 +26,12 @@ class Hash {
     /**
      * 需要处理的512位值
      */
-    byte buffer[64];
+    byte buffer[64]{0};
 
     /**
      * 存放最后的
      */
-    byte digest[32];
+    byte digest[32]{0};
 
     /**
      * 用于判断是否结束
@@ -53,6 +53,12 @@ public:
     Hash();
 
     Hash(const string &message);
+
+    /**
+     * 可通过调用update来更换字符串
+     * @param message
+     */
+    void update(const string& message);
 
     /**
      * 将哈希值转换成64位十六进制的字符串
