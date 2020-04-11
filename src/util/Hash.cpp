@@ -173,7 +173,7 @@ void Hash::init(const byte *input, size_t len){
 
 
 void Hash::transform(const byte block[64]){
-    uint32 w[16];
+    uint32 w[16]{0};
     decode(block,w,16);
 
     uint32 A,B,C,D,E,F,G,H;
