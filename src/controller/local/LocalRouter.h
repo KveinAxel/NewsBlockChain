@@ -2,13 +2,13 @@
 #define NEWS_BLOCK_CHAIN_BLOCK_ROUTER_H
 #include "Router.h"
 
-class BlockRouter : public Router {
+class LocalRouter : public Router {
 public:
     /**
      * 构造器
      * @param server 服务器实例指针
      */
-    explicit BlockRouter(httplib::Server *server);
+    explicit LocalRouter(httplib::Server *server);
 
     /**
      * 路径注册
