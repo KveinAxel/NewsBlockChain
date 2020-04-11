@@ -21,7 +21,7 @@ class Hash {
     /**
      * 数据的长度
      */
-    uint32 count[2];
+    uint32 count[2]{0};
 
     /**
      * 需要处理的512位值
@@ -45,7 +45,7 @@ class Hash {
 
     static const char HEX[16];
 
-        enum {
+    enum {
         BUFFER_SIZE = 1024
     };
 

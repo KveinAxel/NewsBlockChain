@@ -4,21 +4,18 @@
  * 一些基本转换函数
  */
 #define ROTL32(x, r) (x << r) | ((x & 0xFFFFFFFF) >> (32 - r))
-
-#define F1(y, z, l) ( y^ (z& (l^y)))
-
-#define F2(y, z, l) (y ^ (l | ~z))
-
+#define F1(y, z, l) ( (y)^ ((z)& ((l)^(y))))
+#define F2(y, z, l) ((y) ^ ((l) | (~z)))
 #define P1(a, b, c, d, k, s, t)   \
 {                           \
-    a += (F1(b,c,d)+w[k] +t);\
-    a = (ROTL32(a,s) + b);          \
+    (a) += ((F1(b,c,d))+(w[k]) +(t));\
+    (a) = ((ROTL32(a,s)) + (b));          \
 }
 
 #define P2(a, b, c, d, k, s, t)   \
 {                           \
-    a += (F2(b,c,d)+w[k] +t);\
-    a = (ROTL32(a,s) + b);          \
+    (a) += ((F2(b,c,d))+(w[k]) +(t));\
+    (a) = ((ROTL32(a,s)) + (b));          \
 }
 
 const char Hash::HEX[16] = {
@@ -54,13 +51,18 @@ Hash::Hash() {
 }
 
 Hash::Hash(const string &mes) {
+    set();
     init((byte *) mes.c_str(), mes.length());
 }
 
+/**
+ * 找8个初始值
+ */
 void Hash::set() {
     finished = false;
-
-    // 重置数据的长度
+    // 用于存储数据的长度
+    count[1] = count[0] = 0;
+    // 初始化
     state[0] = 0x71b2b78a;
     state[1] = 0xec9ef898;
     state[2] = 0x3145caee;
@@ -71,6 +73,10 @@ void Hash::set() {
     state[7] = 0xa8dca679;
 }
 
+/*
+ * 判断数据是否处理完成
+ * @return 原来的hash值
+ */
 const byte *Hash::getDigest() {
     if (!finished) {
         finished = true;
@@ -103,36 +109,30 @@ const byte *Hash::getDigest() {
         memcpy(count, oldCount, 8);
     }
 
-    state[0] += state[1];
-    state[1] += state[2];
-    state[3] += state[4];
-    state[4] += state[5];
-    state[5] += state[6];
-    state[6] += state[7];
-    state[7] += state[0];
+//    state[0] += state[1]; state[1] += state[2]; state[3] += state[4]; state[4] += state[5];
+//    state[5] += state[6]; state[6] += state[7]; state[7] += state[0];
 
-    state[0] = fmix(state[0]);
-    state[1] = fmix(state[1]);
-    state[2] = fmix(state[2]);
-    state[3] = fmix(state[3]);
-    state[4] = fmix(state[4]);
-    state[5] = fmix(state[5]);
-    state[6] = fmix(state[6]);
-    state[7] = fmix(state[7]);
+//    state[0] = fmix(state[0]);
+//    state[1] = fmix(state[1]);
+//    state[2] = fmix(state[2]);
+//    state[3] = fmix(state[3]);
+//    state[4] = fmix(state[4]);
+//    state[5] = fmix(state[5]);
+//    state[6] = fmix(state[6]);
+//    state[7] = fmix(state[7]);
 
-    state[0] += state[1];
-    state[1] += state[2];
-    state[3] += state[4];
-    state[4] += state[5];
-    state[5] += state[6];
-    state[6] += state[7];
-    state[7] += state[0];
+//    state[0] += state[1]; state[1] += state[2]; state[3] += state[4]; state[4] += state[5];
+//    state[5] += state[6]; state[6] += state[7]; state[7] += state[0];
 
-    encode(state, digest, 32);
+//    encode(state, digest, 32);
 
     return digest;
 }
 
+/*
+ * 对数据进行处理
+ * @param 数据以及数据的长度
+ */
 void Hash::init(const byte *input, size_t len) {
     uint32 i, index, partLen;
     finished = false;
@@ -165,6 +165,7 @@ void Hash::init(const byte *input, size_t len) {
 
     memcpy(&buffer[index], &input[i], len - i);
 }
+
 
 void Hash::transform(const byte block[64]) {
     uint32 w[16];
@@ -429,14 +430,14 @@ void Hash::transform(const byte block[64]) {
     F ^= w[15];
     F = ROTL32(F, 17);
     F += G;
-    F = F * 5 + K[62];
+    F = F * 5 + K[61];
     w[0] *= G;
     w[0] = ROTL32(w[0], 17);
-    w[0] *= K[53];
+    w[0] *= K[62];
     G ^= w[0];
     G = ROTL32(C, 15);
     G += H;
-    G = G * 5 + K[63];
+    G = G * 5 + K[62];
     w[10] *= H;
     w[10] = ROTL32(w[10], 19);
     w[10] *= K[63];
@@ -464,6 +465,11 @@ void Hash::transform(const byte block[64]) {
     state[7] += H;
 }
 
+/**
+ * 使所有位都有翻转的可能
+ * @param h
+ * @return
+ */
 uint32 Hash::fmix(uint32 h) {
     h ^= h >> 16;
     h *= 0x85ebca6b;
@@ -473,6 +479,9 @@ uint32 Hash::fmix(uint32 h) {
     return h;
 }
 
+/*
+ * 将32bit转换成8bit
+ */
 void Hash::encode(const uint32 *input, byte *output, size_t length) {
     for (size_t i = 0, j = 0; j < length; ++i, j += 4) {
         output[j] = (byte) (input[i] & 0xff);
@@ -482,6 +491,9 @@ void Hash::encode(const uint32 *input, byte *output, size_t length) {
     }
 }
 
+/*
+ * 将8bit转换成32bit
+ */
 void Hash::decode(const byte *input, uint32 *output, size_t length) {
     for (size_t i = 0, j = 0; j < length; ++i, j += 4) {
         output[i] = ((uint32) input[j]) | (((uint32) input[j + 1]) << 8) |
@@ -489,6 +501,10 @@ void Hash::decode(const byte *input, uint32 *output, size_t length) {
     }
 }
 
+/*
+ * 将哈希值转换成16进制
+ * @return 转换后的hash值
+ */
 string Hash::toString() {
     const byte *digest_ = getDigest();
 
