@@ -10,7 +10,6 @@ using namespace std;
 typedef unsigned int uint32;
 typedef unsigned char byte;
 
-
 class Hash{
 
     uint32 state[8];     //用于存放这256为bit，用于变化的
@@ -26,7 +25,8 @@ class Hash{
 public:
     Hash();
     Hash(const string& message);
-    string toString();      //输出的是64位十六进制的字符串
+    void update(const string& message);   //可通过调用update来更换字符串
+    string toString();                    //输出的是64位十六进制的字符串
 
 protected:
     void set();

@@ -54,6 +54,10 @@ Hash::Hash(const string& mes){
     init((byte*)mes.c_str(),mes.length());
 }
 
+void Hash::update(const string &mes){
+    set();
+    init((byte*)mes.c_str(),mes.length());
+}
 
 //找8个初始值
 void Hash::set(){
@@ -78,35 +82,35 @@ void Hash::set(){
 
 const byte* Hash::getDigest(){
     if (!finished) {
-            finished = true;
+        finished = true;
 
-            byte bits[8];
-            uint32 oldState[8];
-            uint32 oldCount[2];
-            uint32 index, padLen;
+        byte bits[8]={0};
+        uint32 oldState[8]={0};
+        uint32 oldCount[2]={0};
+        uint32 index, padLen;
 
-            /*存储当前的状态和数据长度 */
-            memcpy(oldState, state, 16);
-            memcpy(oldCount, count, 8);
+        /*存储当前的状态和数据长度 */
+        memcpy(oldState, state, 32);
+        memcpy(oldCount, count, 8);
 
-            /*存储当前的数据长度 */
-            encode(count, bits, 8);
+        /*存储当前的数据长度 */
+        encode(count, bits, 8);
 
-            /*填补数据长度，mod512 == 448*/
-            index = (uint32)((count[0] >> 3) & 0x3f);
-            padLen = (index < 56) ? (56 - index) : (120 - index);
-            init(PADDING, padLen);
+        /*填补数据长度 mod512 == 448*/
+        index = (uint32)((count[0] >> 3) & 0x3f);
+        padLen = (index < 56) ? (56 - index) : (120 - index);
+        init(PADDING, padLen);
 
-            /* Append length (before padding) */
-            init(bits, 8);
+        /* Append length (before padding) */
+        init(bits, 8);
 
-            /*将当前计算出的状态存放在 digest中*/
-            encode(state, digest, 32);
+        /*将当前计算出的状态存放在 digest中*/
+        encode(state, digest, 32);
 
-            /* 重新存储当前的状态 */
-            memcpy(state, oldState, 16);
-            memcpy(count, oldCount, 8);
-        }
+        /* 重新存储当前的状态 */
+        memcpy(state, oldState, 32);
+        memcpy(count, oldCount, 8);
+    }
 
 //    state[0] += state[1]; state[1] += state[2]; state[3] += state[4]; state[4] += state[5];
 //    state[5] += state[6]; state[6] += state[7]; state[7] += state[0];
@@ -346,12 +350,11 @@ void Hash::decode(const byte* input,uint32* output, size_t length){
  */
 string Hash::toString(){
     const byte* digest_ = getDigest();
-
     string str;
-    str.reserve(16 << 1);
-    for (size_t i = 0; i < 16; ++i){
+    str.reserve(32 << 1);
+    for (size_t i = 0; i < 32; ++i) {
         int t = digest_[i];
-        int a = t / 16;
+        int a= t / 16;
         int b = t % 16;
         str.append(1, HEX[a]);
         str.append(1, HEX[b]);
