@@ -26,6 +26,19 @@ public:
      * 获取所有区块头哈希及时间的列表
      */
      static Message<std::vector<std::pair<std::string, time_t>>> list();
+
+     /**
+      * 获取整条序列化后的区块链
+      * @return
+      */
+     static Message<std::string> getBlockChain();
+
+     /**
+      * 将广播到本地的区块加入到本地
+      * @param block 区块
+      * @return
+      */
+     static Message<std::string> broadcast(std::string block);
 };
 
 

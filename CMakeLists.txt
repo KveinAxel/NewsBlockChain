@@ -17,7 +17,7 @@ link_libraries(Dbghelp Dbghelp)
 # add src
 file(GLOB_RECURSE src_files "src/*.c" "src/*.cc" "src/*.cpp" "src/*.h" "src/*.hpp")
 list(REMOVE_ITEM src_files "${CMAKE_SOURCE_DIR}/src/main.cpp")
-add_executable(news_block_chain src/main.cpp ${src_files} src/controller/network/ReceiveBlockController.cpp src/controller/network/ReceiveBlockController.h src/controller/network/SaveIpController.cpp src/controller/network/SaveIpController.h src/controller/local/RegisterSuperNodeController.cpp src/controller/local/RegisterSuperNodeController.h src/service/database/DatabaseService.cpp src/service/database/DatabaseService.h src/controller/network/NetworkRouter.cpp src/controller/network/NetworkRouter.h)
+add_executable(news_block_chain src/main.cpp ${src_files})
 target_include_directories(news_block_chain PUBLIC src)
 
 # test
