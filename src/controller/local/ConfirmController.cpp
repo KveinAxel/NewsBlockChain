@@ -17,6 +17,8 @@ void ConfirmController::service(const httplib::Request &req, httplib::Response &
         } else {
             error(res, "400", msg.msg);
         }
+    } else {
+        error(res, "400", "请求参数异常");
     }
 }
 

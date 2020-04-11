@@ -35,6 +35,8 @@ void SearchBlocksController::service(const httplib::Request &req, httplib::Respo
         } else {
             error(res, "400", "参数异常");
         }
+    } else {
+        error(res, "400", "请求参数异常");
     }
 }
 

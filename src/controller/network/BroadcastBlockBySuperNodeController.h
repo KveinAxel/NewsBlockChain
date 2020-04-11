@@ -4,9 +4,9 @@
 
 #include <controller/BaseController.h>
 
-class ReceiveBlockController : public BaseController {
+class BroadcastBlockBySuperNodeController : public BaseController {
 public:
-    ReceiveBlockController();
+    BroadcastBlockBySuperNodeController();
 
     void service(const httplib::Request &req, httplib::Response &res) override;
 };

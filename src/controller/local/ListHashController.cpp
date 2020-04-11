@@ -29,8 +29,5 @@ void ListHashController::service(const httplib::Request &req, httplib::Response 
     } else {
         error(res, "400", msg.msg);
     }
-
-
-
 }
 
