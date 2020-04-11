@@ -1,20 +1,19 @@
-#include "Hash.h"
+﻿#include "Hash.h"
 
 /*一些基本转换函数*/
-
 #define ROTL32(x,r) (x << r) | ((x & 0xFFFFFFFF) >> (32 - r))
-#define F1(y,z,l) ( y^ (z& (l^y)))
-#define F2(y,z,l) (y ^ (l | ~z))
+#define F1(y,z,l) ( (y)^ ((z)& ((l)^(y))))
+#define F2(y,z,l) ((y) ^ ((l) | (~z)))
 #define P1(a,b,c,d,k,s,t)   \
 {						   \
-    a += (F1(b,c,d)+w[k] +t);\
-    a = (ROTL32(a,s) + b);          \
+    (a) += ((F1(b,c,d))+(w[k]) +(t));\
+    (a) = ((ROTL32(a,s)) + (b));          \
 }
 
 #define P2(a,b,c,d,k,s,t)   \
 {						   \
-    a += (F2(b,c,d)+w[k] +t);\
-    a = (ROTL32(a,s) + b);          \
+    (a) += ((F2(b,c,d))+(w[k]) +(t));\
+    (a) = ((ROTL32(a,s)) + (b));          \
 }
 
 const char Hash::HEX[16]={
@@ -51,14 +50,21 @@ Hash::Hash()
 }
 
 Hash::Hash(const string& mes){
+    set();
     init((byte*)mes.c_str(),mes.length());
 }
 
+void Hash::update(const string &mes){
+    set();
+    init((byte*)mes.c_str(),mes.length());
+}
 
 //找8个初始值
 void Hash::set(){
     finished = false;
-    /*重置数据的长度*/
+    /*用于存储数据的长度*/
+    count[1] = count[0]=0;
+    /*初始化*/
     state[0] = 0x71b2b78a;
     state[1] = 0xec9ef898;
     state[2] = 0x3145caee;
@@ -76,52 +82,52 @@ void Hash::set(){
 
 const byte* Hash::getDigest(){
     if (!finished) {
-            finished = true;
+        finished = true;
 
-            byte bits[8];
-            uint32 oldState[8];
-            uint32 oldCount[2];
-            uint32 index, padLen;
+        byte bits[8]={0};
+        uint32 oldState[8]={0};
+        uint32 oldCount[2]={0};
+        uint32 index, padLen;
 
-            /*存储当前的状态和数据长度 */
-            memcpy(oldState, state, 16);
-            memcpy(oldCount, count, 8);
+        /*存储当前的状态和数据长度 */
+        memcpy(oldState, state, 32);
+        memcpy(oldCount, count, 8);
 
-            /*存储当前的数据长度 */
-            encode(count, bits, 8);
+        /*存储当前的数据长度 */
+        encode(count, bits, 8);
 
-            /*填补数据长度，mod512 == 448*/
-            index = (uint32)((count[0] >> 3) & 0x3f);
-            padLen = (index < 56) ? (56 - index) : (120 - index);
-            init(PADDING, padLen);
+        /*填补数据长度 mod512 == 448*/
+        index = (uint32)((count[0] >> 3) & 0x3f);
+        padLen = (index < 56) ? (56 - index) : (120 - index);
+        init(PADDING, padLen);
 
-            /* Append length (before padding) */
-            init(bits, 8);
+        /* Append length (before padding) */
+        init(bits, 8);
 
-            /*将当前计算出的状态存放在 digest中*/
-            encode(state, digest, 32);
+        /*将当前计算出的状态存放在 digest中*/
+        encode(state, digest, 32);
 
-            /* 重新存储当前的状态 */
-            memcpy(state, oldState, 16);
-            memcpy(count, oldCount, 8);
-        }
+        /* 重新存储当前的状态 */
+        memcpy(state, oldState, 32);
+        memcpy(count, oldCount, 8);
+    }
 
-    state[0] += state[1]; state[1] += state[2]; state[3] += state[4]; state[4] += state[5];
-    state[5] += state[6]; state[6] += state[7]; state[7] += state[0];
+//    state[0] += state[1]; state[1] += state[2]; state[3] += state[4]; state[4] += state[5];
+//    state[5] += state[6]; state[6] += state[7]; state[7] += state[0];
 
-    state[0] = fmix(state[0]);
-    state[1] = fmix(state[1]);
-    state[2] = fmix(state[2]);
-    state[3] = fmix(state[3]);
-    state[4] = fmix(state[4]);
-    state[5] = fmix(state[5]);
-    state[6] = fmix(state[6]);
-    state[7] = fmix(state[7]);
+//    state[0] = fmix(state[0]);
+//    state[1] = fmix(state[1]);
+//    state[2] = fmix(state[2]);
+//    state[3] = fmix(state[3]);
+//    state[4] = fmix(state[4]);
+//    state[5] = fmix(state[5]);
+//    state[6] = fmix(state[6]);
+//    state[7] = fmix(state[7]);
 
-    state[0] += state[1]; state[1] += state[2]; state[3] += state[4]; state[4] += state[5];
-    state[5] += state[6]; state[6] += state[7]; state[7] += state[0];
+//    state[0] += state[1]; state[1] += state[2]; state[3] += state[4]; state[4] += state[5];
+//    state[5] += state[6]; state[6] += state[7]; state[7] += state[0];
 
-    encode(state, digest, 32);
+//    encode(state, digest, 32);
 
     return digest;
 }
@@ -167,7 +173,7 @@ void Hash::init(const byte *input, size_t len){
 
 
 void Hash::transform(const byte block[64]){
-    uint32 w[16];
+    uint32 w[16]{0};
     decode(block,w,16);
 
     uint32 A,B,C,D,E,F,G,H;
@@ -279,9 +285,9 @@ void Hash::transform(const byte block[64]){
     w[12] *= E; w[12] = ROTL32(w[12], 11); w[12] *= K[60]; E ^= w[12];
     E = ROTL32(E, 19); E += F; E = E * 5 + K[60];
     w[15] *= F; w[15] = ROTL32(w[15], 13); w[15] *= K[61]; F ^= w[15];
-    F = ROTL32(F, 17); F += G; F = F * 5 + K[62];
-    w[0] *= G; w[0] = ROTL32(w[0], 17); w[0] *= K[53]; G ^= w[0];
-    G = ROTL32(C, 15); G += H; G = G * 5 + K[63];
+    F = ROTL32(F, 17); F += G; F = F * 5 + K[61];
+    w[0] *= G; w[0] = ROTL32(w[0], 17); w[0] *= K[62]; G ^= w[0];
+    G = ROTL32(C, 15); G += H; G = G * 5 + K[62];
     w[10] *= H; w[10] = ROTL32(w[10], 19);  w[10] *= K[63]; H ^= w[10];
     H = ROTL32(D, 13); H += A; H = H * 5 + K[63];
 
@@ -344,12 +350,11 @@ void Hash::decode(const byte* input,uint32* output, size_t length){
  */
 string Hash::toString(){
     const byte* digest_ = getDigest();
-
     string str;
-    str.reserve(16 << 1);
-    for (size_t i = 0; i < 16; ++i){
+    str.reserve(32 << 1);
+    for (size_t i = 0; i < 32; ++i) {
         int t = digest_[i];
-        int a = t / 16;
+        int a= t / 16;
         int b = t % 16;
         str.append(1, HEX[a]);
         str.append(1, HEX[b]);
