@@ -26,9 +26,10 @@ bool BlockChain::updateBlock(BlockObj *request){
     if(request->isLegal==true){
         request->store();
         BlockChain::blockChainHash.insert(request->currentHash,request);
-//        if(request->lastHash==BlockChain::currentHashKey){
-//            BlockChain::currentHashKey==request->currentHash;
-//        }
+        if(request->lastHash==BlockChain::currentHashKey||BlockChain::currentHashKey.length()==0){
+            //如果一开始BlockChain::currentHashKey为空，这也要更新BlockChain::currentHashKey
+            BlockChain::currentHashKey=request->currentHash;
+        }
         return true;
     }
     else{

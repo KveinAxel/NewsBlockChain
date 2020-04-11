@@ -34,6 +34,6 @@ BlockObj::BlockObj(QJsonObject& jsonObject){
 QList<int> BlockObj::searchKeyword(const vector<string> &keywords_list){
     searcher* searcherHandle= new SearcherImpl();
     searcherHandle->Enter_Keywords(keywords_list);
-    search_result& resultHandle=searcherHandle->Keyword_Search(BlockObj::article);
+    search_result& resultHandle=searcherHandle->Keyword_Search(BlockObj::article);//要改接口这里
     resultHandle.Destruction();
 }

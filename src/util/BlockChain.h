@@ -18,9 +18,9 @@ public:
     BlockChain();
     ~BlockChain();
     QList<BlockObj*> searchKeywordLocal(const vector<string>&keywords_list);//返回检索到的文章，这个是本地的函数，不返回json格式
-    QList<int>  modifyCheckLocal(const QList<std::string> article,string keyOfResponse);//要选定区块的才能检测，这个函数就离谱，这老师脑子有坑，不懂区块链就别乱定规则,还定什么一个区块一篇文章，我tm真的服了
-    QJsonObject createBlockLocal(const QList<std::string> article);//本地拿到文章产生块，返回块的json信息，发送到其他本节点可见的节点，按理说能够调用这个函数只应该是一个节点，否者会引发分布式系统的不一致性，但是框架能制定有效的应用层协议避免不一致性也行
-    QJsonObject createBlock(const QByteArray article);//提供这个函数功能，从网络request中拿到文章，远程造块，返回信息同上
+    QList<int>  modifyCheckLocal(const QList<std::string>& article,string keyOfResponse);//要选定区块的才能检测，这个函数就离谱，这老师脑子有坑，不懂区块链就别乱定规则,还定什么一个区块一篇文章，我tm真的服了
+    QJsonObject createBlockLocal(const QList<std::string>& article);//本地拿到文章产生块，返回块的json信息，发送到其他本节点可见的节点，按理说能够调用这个函数只应该是一个节点，否者会引发分布式系统的不一致性，但是框架能制定有效的应用层协议避免不一致性也行
+    QJsonObject createBlock(const QList<std::string>& article);//提供这个函数功能，从网络request中拿到文章，远程造块，返回信息同上
 
 
     static QJsonObject serializeToJson(BlockObj*);
@@ -29,7 +29,7 @@ public:
      * :article_1-QString
      * :***
      * :article_paragragh-QString
-     * //文章按段落分开存
+     * //文章按段落分开序列化
      * merkleRoot
      * createTime
      * lastHash
