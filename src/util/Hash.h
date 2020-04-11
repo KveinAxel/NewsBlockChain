@@ -1,4 +1,4 @@
-#ifndef HASH_H
+﻿#ifndef HASH_H
 #define HASH_H
 
 #include <string>
@@ -9,6 +9,7 @@ using namespace std;
 /*定义类型*/
 typedef unsigned int uint32;
 typedef unsigned char byte;
+
 
 class Hash{
 
@@ -25,7 +26,6 @@ class Hash{
 public:
     Hash();
     Hash(const string& message);
-    Hash(ifstream& in);
     string toString();      //输出的是64位十六进制的字符串
 
 protected:
