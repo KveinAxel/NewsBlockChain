@@ -27,7 +27,7 @@ Message<std::string> Connection::getBlockChainData(std::string url) {
     auto port = url.substr(pos + 1);
     httplib::Client cli(uri, atoi(port.c_str()));
     // todo 改成获取区块链
-    auto res = cli.Get("/block/list");
+    auto res = cli.Get("/local/list");
     if (res && res->status == 200) {
         auto json = res->body;
         rapidjson::Document document;
