@@ -21,6 +21,7 @@ SOURCES += \
     src/controller/BaseController.cpp \
     src/service/MerkleTreeService.cpp \
     src/util/Block.cpp \
+    src/util/BlockChain.cpp \
     src/util/Fileutil.cpp \
     src/util/Hash.cpp \
     src/util/MerkleTree.cpp \

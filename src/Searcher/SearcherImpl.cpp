@@ -15,7 +15,7 @@ void SearcherImpl::Enter_Keywords(const vector<string>&keywords){
     dictionary->push(keywords);
     dictionary->build_failure_pointer();
 }
-search_result* SearcherImpl::Keyword_Search(const string& text) {
+search_result& SearcherImpl::Keyword_Search(const string& text) {
     vector<vector<int>> loca(keywords_list.size());
     int sum=0;
 
@@ -24,7 +24,7 @@ search_result* SearcherImpl::Keyword_Search(const string& text) {
     Search_Result_impl* result=new Search_Result_impl;
     result->push(keywords_list);
     result->insert(sum,loca);
-    return result;
+    return *result;
 }
 
 

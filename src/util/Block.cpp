@@ -11,7 +11,20 @@ QList<int> BlockObj::modifyCheck(const QList<std::string> article){
     }
     return merkletree->modifyCheck(article);
 }
-BlockObj::BlockObj(){
+BlockObj::BlockObj(QJsonObject& jsonObject){
+    this->currentHash=jsonObject.value("hashKey").toString().toStdString();
+    this->lastHash=jsonObject.value("lastHash").toString().toStdString();
+    this->createTime=jsonObject.value("createTime").toString().toLongLong();
+    this->merkleRoot=jsonObject.value("merkleRoot").toString().toStdString();
+    string articlePara;
+    int i=1;
+    while(1){
+        if(jsonObject.contains(QString("article_%1").arg(i+1))){
+            articlePara=jsonObject.value(QString("article_%1").arg(i)).toString().toStdString();
+            this->article.append(articlePara);
+        }
+        else break;
+    }
     merkletree=new MerkleTree(article);
     if(merkleRoot!=merkletree->merkleRoot())
         isLegal=false;
@@ -19,8 +32,8 @@ BlockObj::BlockObj(){
         isLegal=true;
 }
 QList<int> BlockObj::searchKeyword(const vector<string> &keywords_list){
-    SearcherImpl searcherHandle=SearcherImpl();
-    searcherHandle.Enter_Keywords(keywords_list);
-    search_result* resultHandle=searcherHandle.Keyword_Search(BlockObj::blockArticle());
-    //
+    searcher* searcherHandle= new SearcherImpl();
+    searcherHandle->Enter_Keywords(keywords_list);
+    search_result& resultHandle=searcherHandle->Keyword_Search(BlockObj::article);
+    resultHandle.Destruction();
 }

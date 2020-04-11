@@ -6,19 +6,22 @@
 #include <string>
 #include "MerkleTree.h"
 #include <QDebug>
+#include<QJsonObject>
 #include "../Searcher/SearcherImpl.h"
 #include "../Searcher/Search_Result_impl.h"
+#include "search.h"
 using namespace std;
 class BlockObj: public QObject
 {
     Q_OBJECT
 public:
     BlockObj(string hashKey);//由数据库中的key值连接数据库可得对象，由于我没有权限知道数据库，所以该函数我不会实现
-    BlockObj();//参数未填，但并不为空，该函数是请求其他节点的信息，由网络信息的结构来构造，由于不知道网络框架暂时不实现
+    BlockObj(QJsonObject&);//该函数是请求其他节点的信息，由网络信息的结构来构造，由于不知道网络框架暂时不实现
     bool store();//完成block的数据库存储，若数据库中已存在hashkey的，这返回false，并不载入数据库，若之前没有，则调用此函数载入
     //存储的块体是压缩码，先把blockArticle和blockHead合并成string，转utf-8，得到QByteArray,在调data（）函数，huffman.h。最后压缩后变回QByteArray，然后存在本地
-    string blockArticle();//返回文章的string型，供Keyword_Search（）使用searcher.h中定义
-    string blockHead();//返回块头的string型,供取hash
+    string blockArticleHash();//返回块文章的string的hash
+    string blockHeadHash();//返回块头的string的hash
+    int paragraphNum();
     QList<int> modifyCheck(const QList<std::string> article);//会调用this.merkletree的函数，也是返回QList<int> int为修改过的段，为空则没有错,这个article是外部的，待检测的,还有这是之前是我突然改了接口，传达了错误的信息，所以我会帮改一下代码
     QList<int> searchKeyword(const vector<string>&keywords_list);//放回关键词在文章中出现的次数的list
     ~BlockObj();
@@ -29,6 +32,7 @@ public:
     //为了保证区块里的原文是合法的（因为merkle根一定是合法），在构造block时就会set isLegal的值，如果从网络上传来的block的article对不上merkle根，则不合法，也没有资格做merkletree的检测-modifyCheck()和储存在本地的数据库-store(），
     //bool isHead;//如果该区块在本地只有头，则为真，否者为假，算了不搞那么复杂了，我tm都不知道自己再写什么，我连框架都不知道
     string lastHash;//上一块的哈希
+    string currentHash;//本块的hash
     time_t createTime;//出块时间
     //short paragraphNum;//文章段落数
     string merkleRoot;
