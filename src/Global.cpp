@@ -1,12 +1,14 @@
 #include "Global.h"
 
 Global *Global::global = nullptr;
-
+std::string Global::serverURL = "127.0.0.1";
+int Global::serverPort = 8000;
 
 Global::Global() {
     this->logger = new LOGGER::CLogger(LOGGER::LogLevel_Info,
                                        LOGGER::CLogger::GetAppAbsolutePath().append("log\\"));
 
+    // todo init localURL and localPort
 }
 
 Global::~Global() {
