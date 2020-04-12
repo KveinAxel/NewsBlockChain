@@ -1,3 +1,4 @@
+#include <httplib.h>
 #include "Global.h"
 
 Global *Global::global = nullptr;

@@ -11,7 +11,7 @@ private:
     LOGGER::CLogger *logger;
     Global();
 public:
-    std::map<std::string, int> ip_tables{};
+    std::vector<std::pair<std::string, int>> ip_tables;
     std::map<std::string, std::string> database{};
     BlockChain* blockChain = nullptr;
     bool isSuperNode = false;

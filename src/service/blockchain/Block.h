@@ -84,7 +84,7 @@ public:
 
     static BlockObj *deserialize(std::string block);
 
-    int searchKeyword(const std::vector<std::string> &keywords_list)
+    int searchKeyword(const std::vector<std::string> &keywords_list);
 
 };
 

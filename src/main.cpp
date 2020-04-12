@@ -1,7 +1,9 @@
 #include <winsock2.h>
 #include <iostream>
+#include <httplib.h>
 #include "util/Logger.h"
 #include "Global.h"
+#include "Router.h"
 
 int main(int argc, char *argv[]) {
     auto global = Global::getGlobal();
@@ -9,6 +11,10 @@ int main(int argc, char *argv[]) {
     std::cin >> global->localURL;
     std::cout << "请输入本机端口" << std::endl;
     std::cin >> global->localPort;
-    std::cout << "news block chain" << std::endl;
+
+    httplib::Server* svr = new httplib::Server;
+    Router* router = new Router(svr);
+    router->routeRegister();
+    svr->listen("localhost", 8001);
     return 0;
 }

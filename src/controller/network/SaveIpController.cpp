@@ -8,7 +8,7 @@ void SaveIpController::service(const httplib::Request &req, httplib::Response &r
             if (req.has_param("port")) {
                 auto url = req.get_param_value("url");
                 auto port = atoi(req.get_param_value("port").c_str());
-                global->ip_tables[url] = port;
+                global->ip_tables.push_back(std::make_pair(url, port));
                 rapidjson::Value resValue;
                 resValue.SetObject();
                 rapidjson::Document document;

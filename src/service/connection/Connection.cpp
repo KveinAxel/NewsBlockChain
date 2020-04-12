@@ -13,12 +13,15 @@ Message<std::string> Connection::node() {
         rapidjson::Document document;
         document.Parse(json.c_str());
         if (document.IsObject()) {
-            auto value = document.FindMember("data");
-            if (value->value.IsObject()) {
-                std::string url = value->value.FindMember("url")->value.GetString();
-                int port = value->value.FindMember("port")->value.GetInt();
-                global->ip_tables[url] = port;
-                return Message<std::string>::success("加入区块网络成功");
+            auto code = document.FindMember("code")->value.GetInt();
+            if (code == 200) {
+                auto value = document.FindMember("data");
+                if (value->value.IsObject()) {
+                    std::string url = value->value.FindMember("url")->value.GetString();
+                    int port = value->value.FindMember("port")->value.GetInt();
+                    global->ip_tables.push_back(std::make_pair(url, port));
+                    return Message<std::string>::success("加入区块网络成功");
+                }
             }
         }
     }
@@ -30,10 +33,18 @@ Message<std::string> Connection::superNone() {
     httplib::Client cli(Global::serverURL, Global::serverPort);
     auto requirePath = "/superNode?url=" + global->localURL + "&port=" + std::to_string(global->localPort);
     auto res = cli.Get(requirePath.c_str());
+    rapidjson::Document document;
     if (res && res->status == 200) {
-        global->isSuperNode = true;
-        global->ip_tables.clear();
-        return Message<std::string>::success("注册超级节点成功");
+        auto json = res->body;
+        document.Parse(json.c_str());
+        if (document.IsObject()) {
+            auto code = document.FindMember("code")->value.GetInt();
+            if (code == 200) {
+                global->isSuperNode = true;
+                global->ip_tables.clear();
+                return Message<std::string>::success("注册超级节点成功");
+            }
+        }
     }
     return Message<std::string>::fail(400, "注册超级节点失败");
 }
@@ -56,10 +67,17 @@ Message<std::string> Connection::broadcastBlockToDNS(std::string block) {
     auto queryPath = "/broadcast?block=" + block;
     auto res = cli.Get(queryPath.c_str());
     if (res && res->status == 200) {
-        return Message<std::string>::success("广播至DNS成功");
-    } else {
-        return Message<std::string>::fail(400, "广播至DNS失败");
+        rapidjson::Document document;
+        auto json = res->body;
+        document.Parse(json.c_str());
+        if (document.IsObject()) {
+            auto code = document.FindMember("code")->value.GetInt();
+            if (code == 200) {
+                return Message<std::string>::success("广播至DNS成功");
+            }
+        }
     }
+    return Message<std::string>::fail(400, "广播至DNS失败");
 }
 
 Message<std::string> Connection::getBlockChain() {
@@ -86,9 +104,18 @@ Message<std::string> Connection::getBlockChain() {
         rapidjson::Document document;
         document.Parse(json.c_str());
         if (document.IsObject()) {
-            auto data = document.FindMember("data")->value.GetString();
-            global->blockChain = BlockChain::deserialize(data);
-            return Message<std::string>::success("获取区块成功");
+            if (global->isSuperNode) {
+                auto code = document.FindMember("code")->value.GetInt();
+                if (code == 200) {
+                    auto data = document.FindMember("data")->value.GetString();
+                    global->blockChain = BlockChain::deserialize(data);
+                    return Message<std::string>::success("获取区块成功");
+                }
+            } else {
+                auto data = document.FindMember("data")->value.GetString();
+                global->blockChain = BlockChain::deserialize(data);
+                return Message<std::string>::success("获取区块成功");
+            }
         }
         return Message<std::string>::fail(400, "获取区块失败");
     } else {
@@ -124,12 +151,24 @@ Message<std::string> Connection::getBlockChainPartly() {
             rapidjson::Document document;
             document.Parse(json.c_str());
             if (document.IsObject()) {
-                auto arr = document.FindMember("data")->value.GetArray();
-                std::vector<std::string> vec;
-                for (auto &itr: arr) {
-                    global->blockChain->updateBlock(itr.GetString());
+                if (global->isSuperNode) {
+                    auto code = document.FindMember("code")->value.GetInt();
+                    if (code == 200) {
+                        auto arr = document.FindMember("data")->value.GetArray();
+                        std::vector<std::string> vec;
+                        for (auto &itr: arr) {
+                            global->blockChain->updateBlock(itr.GetString());
+                        }
+                        return Message<std::string>::success("增量获取区块成功");
+                    }
+                } else {
+                    auto arr = document.FindMember("data")->value.GetArray();
+                    std::vector<std::string> vec;
+                    for (auto &itr: arr) {
+                        global->blockChain->updateBlock(itr.GetString());
+                    }
+                    return Message<std::string>::success("增量获取区块成功");
                 }
-                return Message<std::string>::success("增量获取区块成功");
             }
         }
     }

@@ -9,9 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # add lib
 add_subdirectory(ext)
+link_libraries(ws2_32 wsock32)
 include_directories(ext/rapidjson/include)
 include_directories(ext/cpp-httplib)
-link_libraries(ws2_32 wsock32)
 link_libraries(Dbghelp Dbghelp)
 
 # add src
