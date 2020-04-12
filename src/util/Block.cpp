@@ -11,11 +11,13 @@ QList<int> BlockObj::modifyCheck(const QList<std::string> article){
     }
     return merkletree->modifyCheck(article);
 }
+
 BlockObj::BlockObj(QJsonObject& jsonObject){
-    this->currentHash=jsonObject.value("hashKey").toString().toStdString();
-    this->lastHash=jsonObject.value("lastHash").toString().toStdString();
-    this->createTime=jsonObject.value("createTime").toString().toLongLong();
+    this->createTime=QDateTime::fromString(jsonObject.value("createTime").toString(),"yyyy.MM.dd hh:mm:ss");
     this->merkleRoot=jsonObject.value("merkleRoot").toString().toStdString();
+    this->currentHash=this->blockHeadHash();
+    this->currentHash=jsonObject.value("hashKey").toString().toStdString();
+    //由于前面验证过，josn里的hashKey与其实际头的hash一定是相符合的，否者在containLegalBlock()函数直接就会被不接受
     string articlePara;
     int i=1;
     while(1){
@@ -31,9 +33,33 @@ BlockObj::BlockObj(QJsonObject& jsonObject){
     else
         isLegal=true;
 }
+
+BlockObj::BlockObj(const QList<std::string> &article,string lastHashKey){
+    this->createTime=QDateTime::currentDateTime();
+    for(int i=0;i<article.size();i++){
+            this->article.append(article.at(i));
+    }
+    merkletree=new MerkleTree(article);
+    this->merkleRoot=merkletree->merkleRoot();
+    this->lastHash=lastHashKey;
+    this->isLegal=true;
+}
+
+string BlockObj::blockArticleHash(){
+    string headHash=lastHash;
+    headHash.append(createTime.toString("yyyy.MM.dd hh:mm:ss").toStdString());
+    headHash.append(merkleRoot);
+    Hash temp=Hash(headHash);
+    return temp.toString();
+}
+
 QList<int> BlockObj::searchKeyword(const vector<string> &keywords_list){
     searcher* searcherHandle= new SearcherImpl();
     searcherHandle->Enter_Keywords(keywords_list);
-    search_result& resultHandle=searcherHandle->Keyword_Search(BlockObj::article);//要改接口这里
+    string searchText;
+    for(int i=0;i<BlockObj::article.size();i++){
+        searchText.append(article.at(i));
+    }
+    search_result& resultHandle=searcherHandle->Keyword_Search(searchText);//要改接口这里
     resultHandle.Destruction();
 }

@@ -3,6 +3,7 @@
 #include "Block.h"
 #include <QHash>
 #include <QJsonObject>
+#include "Hash.h"
 //我是真的不知道框架，以及我现在写的节点面向的对象是什么，所有可能会有很多莫名其妙的地方
 class BlockChain{
 public:
@@ -23,7 +24,7 @@ public:
     QJsonObject createBlock(const QList<std::string>& article);//提供这个函数功能，从网络request中拿到文章，远程造块，返回信息同上
 
 
-    static QJsonObject serializeToJson(BlockObj*);
+    QJsonObject serializeToJson(BlockObj*);
     /*QJsonObject有
      * :hashKey-QString
      * :article_1-QString
@@ -35,6 +36,8 @@ public:
      * lastHash
     */
     static BlockObj* unserializeFromJson(QJsonObject&);//从网络中请求的QJsonObject或其他节点推送的QJsonObject，转化本地的块
+    static bool containLegalBlock(QJsonObject& jsonObject);//从本地查是否已经保存jsonObject的块，直接从数据库中查吧，所以设为静态函数，这个函数主要是接受到外来的块，要是有就本地有，连unserializeFromJson也不需要调用，所以你在调用unserializeFromJson前先调一下这个函数
+    //且验证josn里的hashKey与其实际头的hash一定是相符合的，不符合则不接受
 };
 
 #endif // BLOCKCHAIN_H

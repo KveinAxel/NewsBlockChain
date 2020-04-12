@@ -6,10 +6,12 @@
 #include <string>
 #include "MerkleTree.h"
 #include <QDebug>
+#include <QDateTime>
 #include<QJsonObject>
 #include "../Searcher/SearcherImpl.h"
 #include "../Searcher/Search_Result_impl.h"
 #include "search.h"
+#include "Hash.h"
 using namespace std;
 class BlockObj: public QObject
 {
@@ -17,6 +19,7 @@ class BlockObj: public QObject
 public:
     BlockObj(string hashKey);//由数据库中的key值连接数据库可得对象，由于我没有权限知道数据库，所以该函数我不会实现
     BlockObj(QJsonObject&);//该函数是请求其他节点的信息，由网络信息的结构来构造，由于不知道网络框架暂时不实现
+    BlockObj(const QList<std::string> &article,string lastHashKey);//用文章造块
     bool store();//完成block的数据库存储，若数据库中已存在hashkey的，这返回false，并不载入数据库，若之前没有，则调用此函数载入
     //存储的块体是压缩码，先把blockArticle和blockHead合并成string，转utf-8，得到QByteArray,在调data（）函数，huffman.h。最后压缩后变回QByteArray，然后存在本地
     string blockArticleHash();//返回块文章的string的hash
@@ -33,7 +36,8 @@ public:
     //bool isHead;//如果该区块在本地只有头，则为真，否者为假，算了不搞那么复杂了，我tm都不知道自己再写什么，我连框架都不知道
     string lastHash;//上一块的哈希
     string currentHash;//本块的hash
-    time_t createTime;//出块时间
+    //time_t createTime;//出块时间
+    QDateTime  createTime;
     //short paragraphNum;//文章段落数
     string merkleRoot;
     MerkleTree* merkletree;//吕民轩请注意这个结构,构造函数中会实例化  merkletree=new MerkleTree（this）;   应该有 QList<bool>
