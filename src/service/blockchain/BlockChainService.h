@@ -1,6 +1,5 @@
 #ifndef NEWS_BLOCK_CHAIN_BLOCK_CHAIN_SERVICE_H
 #define NEWS_BLOCK_CHAIN_BLOCK_CHAIN_SERVICE_H
-
 #include <string>
 #include <service/hash/Hash.h>
 #include <vector>
@@ -20,7 +19,7 @@ public:
      * @param article 文章
      * @return 无篡改返回200， 有篡改返回400， 其他事件返回500
      */
-    static Message<std::string> confirmArticle(std::string article);
+    static Message<std::vector<int>> confirmArticle(std::string article, std::string hash);
 
     /**
      * 获取所有区块头哈希及时间的列表
@@ -31,7 +30,7 @@ public:
       * 获取整条序列化后的区块链
       * @return
       */
-     static Message<std::string> getBlockChain();
+     static Message<std::pair<std::string, int>> getBlockChain();
 
      /**
       * 将广播到本地的区块加入到本地
@@ -41,10 +40,17 @@ public:
      static Message<std::string> broadcast(std::string block);
 
      /**
-      * 通过序列化的数据得到区块链
+      * 获取区块头列表
       * @return
       */
-     static Message<std::string> deserializeBlockChain(std::string block);
+     static Message<std::vector<std::string>> getBlockHeadHashList();
+
+     /**
+      * 获取key以后的区块
+      * @param keyList
+      * @return
+      */
+     static Message<std::pair<std::vector<std::string>, int>> getBlockList(std::string key);
 };
 
 
