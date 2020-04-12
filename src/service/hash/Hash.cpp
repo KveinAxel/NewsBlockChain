@@ -51,12 +51,12 @@ Hash::Hash()
     set();
 }
 
-Hash::Hash(const string& mes){
+Hash::Hash(const std::string& mes){
     set();
     init((byte*)mes.c_str(),mes.length());
 }
 
-void Hash::update(const string &mes){
+void Hash::update(const std::string &mes){
     set();
     init((byte*)mes.c_str(),mes.length());
 }
@@ -352,9 +352,9 @@ void Hash::decode(const byte* input,uint32* output, size_t length){
  * 将哈希值转换成16进制
  * @return 转换后的hash值
  */
-string Hash::toString(){
+std::string Hash::toString(){
     const byte* digest_ = getDigest();
-    string str;
+    std::string str;
     str.reserve(32 << 1);
     for (size_t i = 0; i < 32; ++i) {
         int t = digest_[i];

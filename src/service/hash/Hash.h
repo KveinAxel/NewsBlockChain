@@ -1,11 +1,7 @@
 #ifndef NEWS_BLOCK_CHAIN_HASH_H
 #define NEWS_BLOCK_CHAIN_HASH_H
-
 #include <string>
 #include <iostream>
-
-using namespace std;
-
 
 /*定义类型*/
 typedef unsigned int uint32;
@@ -52,19 +48,19 @@ class Hash {
 public:
     Hash();
 
-    Hash(const string &message);
+    Hash(const std::string &message);
 
     /**
      * 可通过调用update来更换字符串
      * @param message
      */
-    void update(const string& message);
+    void update(const std::string& message);
 
     /**
      * 将哈希值转换成64位十六进制的字符串
      * @return 转换后的hash值
      */
-    string toString();
+    std::string toString();
 
 protected:
 
