@@ -53,7 +53,7 @@ string BlockObj::blockArticleHash(){
     return temp.toString();
 }
 
-QList<int> BlockObj::searchKeyword(const vector<string> &keywords_list){
+int BlockObj::searchKeyword(const vector<string> &keywords_list){
     searcher* searcherHandle= new SearcherImpl();
     searcherHandle->Enter_Keywords(keywords_list);
     string searchText;
@@ -61,5 +61,7 @@ QList<int> BlockObj::searchKeyword(const vector<string> &keywords_list){
         searchText.append(article.at(i));
     }
     search_result& resultHandle=searcherHandle->Keyword_Search(searchText);//要改接口这里
+    int temp=resultHandle.Get_Total();
     resultHandle.Destruction();
+    return temp;
 }

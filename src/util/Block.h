@@ -24,9 +24,8 @@ public:
     //存储的块体是压缩码，先把blockArticle和blockHead合并成string，转utf-8，得到QByteArray,在调data（）函数，huffman.h。最后压缩后变回QByteArray，然后存在本地
     string blockArticleHash();//返回块文章的string的hash
     string blockHeadHash();//返回块头的string的hash
-    int paragraphNum();
     QList<int> modifyCheck(const QList<std::string> article);//会调用this.merkletree的函数，也是返回QList<int> int为修改过的段，为空则没有错,这个article是外部的，待检测的,还有这是之前是我突然改了接口，传达了错误的信息，所以我会帮改一下代码
-    QList<int> searchKeyword(const vector<string>&keywords_list);//放回关键词在文章中出现的次数的list
+    int searchKeyword(const vector<string>&keywords_list);//放回关键词在文章中出现的次数的list
     ~BlockObj();
 
 
