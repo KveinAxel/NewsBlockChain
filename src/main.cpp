@@ -1,3 +1,4 @@
+#include <winsock2.h>
 #include <iostream>
 #include "util/Logger.h"
 #include "Global.h"
