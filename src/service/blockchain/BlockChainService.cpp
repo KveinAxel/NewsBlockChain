@@ -24,3 +24,8 @@ Message<std::string> BlockChainService::getBlockChain() {
     // todo
     return Message<std::string>::success("成功");
 }
+
+Message<std::string> BlockChainService::deserializeBlockChain(std::string block) {
+    // todo
+    return Message<std::string>::success(block);
+}

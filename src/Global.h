@@ -11,9 +11,10 @@ private:
     Global();
 public:
     std::map<std::string, int> ip_tables{};
+    std::map<std::string, std::string> database;
     bool isSuperNode = false;
     std::string localURL;
-    int localPort;
+    int localPort = 0;
     static Global* global;
     ~Global();
     LOGGER::CLogger* getLogger();

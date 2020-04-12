@@ -8,7 +8,6 @@ Global::Global() {
     this->logger = new LOGGER::CLogger(LOGGER::LogLevel_Info,
                                        LOGGER::CLogger::GetAppAbsolutePath().append("log\\"));
 
-    // todo init localURL and localPort
 }
 
 Global::~Global() {

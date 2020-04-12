@@ -2,6 +2,7 @@
 #include <httplib.h>
 #include <rapidjson/document.h>
 #include <Global.h>
+#include <service/blockchain/BlockChainService.h>
 
 Message<std::string> Connection::node() {
     auto global = Global::getGlobal();
@@ -39,13 +40,9 @@ Message<std::string> Connection::superNone() {
 }
 
 
-Message<std::string> Connection::getBlockChainData(std::string url) {
-    auto pos = url.find(':');
-    auto uri = url.substr(0, pos);
-    auto port = url.substr(pos + 1);
-    httplib::Client cli(uri, atoi(port.c_str()));
-    // todo 改成获取区块链
-    auto res = cli.Get("/local/list");
+Message<std::string> Connection::getBlockChainData(std::string url, int port) {
+    httplib::Client cli(url, port);
+    auto res = cli.Get("/network/getBlock");
     if (res && res->status == 200) {
         auto json = res->body;
         rapidjson::Document document;
@@ -53,19 +50,38 @@ Message<std::string> Connection::getBlockChainData(std::string url) {
         if (document.IsObject()) {
             auto value = document.FindMember("data");
             std::string data = value->value.GetString();
-            // todo 改成返回区块链
-            return Message<std::string>::success("获取data成功", &data);
+            auto serviceRes = BlockChainService::deserializeBlockChain(data);
+            if (serviceRes.code == 200) {
+                return Message<std::string>::success("反序列化区块链成功");
+            } else {
+                return Message<std::string>::fail(400,"获取区块链失败");
+            }
         }
     }
-    return Message<std::string>::fail(400, "获取区块信息失败");
+    return Message<std::string>::fail(400, "获取区块链失败");
 }
 
 Message<std::string> Connection::broadcastBlockToNode(std::string block, std::string url, int port) {
-    // todo
+    auto global = Global::getGlobal();
+    auto cli = httplib::Client(url, port);
+    auto queryPath = "/broadcastBlockBySuperNode?block=" + block;
+    auto res = cli.Get(queryPath.c_str());
+    if (res && res->status == 200) {
+        return Message<std::string>::success("广播至普通节点成功");
+    } else {
+        return Message<std::string>::fail(400, "广播至普通节点失败");
+    }
     return Message<std::string>::success(block);
 }
 
 Message<std::string> Connection::broadcastBlockToDNS(std::string block) {
-    // todo 广播至DNS
-    return Message<std::string>::success(block);
+    auto global = Global::getGlobal();
+    auto cli = httplib::Client(Global::serverURL, Global::serverPort);
+    auto queryPath = "/broadcast?block=" + block;
+    auto res = cli.Get(queryPath.c_str());
+    if (res && res->status == 200) {
+        return Message<std::string>::success("广播至DNS成功");
+    } else {
+        return Message<std::string>::fail(400, "广播至DNS失败");
+    }
 }

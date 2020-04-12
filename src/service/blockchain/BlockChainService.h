@@ -4,7 +4,7 @@
 #include <string>
 #include <service/hash/Hash.h>
 #include <vector>
-#include "../../Message.h"
+#include <Message.h>
 
 class BlockChainService {
 public:
@@ -39,6 +39,12 @@ public:
       * @return
       */
      static Message<std::string> broadcast(std::string block);
+
+     /**
+      * 通过序列化的数据得到区块链
+      * @return
+      */
+     static Message<std::string> deserializeBlockChain(std::string block);
 };
 
 

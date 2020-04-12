@@ -2,7 +2,7 @@
 #define NEWS_BLOCK_CHAIN_SEARCHER_SERVICE_H
 
 #include <vector>
-#include "../../Message.h"
+#include <Message.h>
 
 
 class SearcherService {

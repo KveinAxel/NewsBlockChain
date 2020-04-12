@@ -22,7 +22,7 @@ public:
      * @param url
      * @return
      */
-    static Message<std::string> getBlockChainData(std::string url);
+    static Message<std::string> getBlockChainData(std::string url, int port);
 
     /**
      * 将区块广播至普通节点
