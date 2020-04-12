@@ -18,6 +18,7 @@ QPair<QJsonObject,bool> BlockChain::responseBlock(string &keyOfResponse){
         }
         return QPair<QJsonObject,bool>(BlockChain::serializeToJson(BlockChain::blockChainHash.value(keyOfResponse)),true);
 }
+}
 QJsonObject BlockChain::serializeToJson(BlockObj* block){
     QJsonObject jsonObject;
     jsonObject.insert("hashKey",QString::fromUtf8(block->blockHeadHash().data()));
