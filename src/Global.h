@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <service/blockchain/BlockChain.h>
 #include "util/Logger.h"
 
 class Global {
@@ -11,7 +12,8 @@ private:
     Global();
 public:
     std::map<std::string, int> ip_tables{};
-    std::map<std::string, std::string> database;
+    std::map<std::string, std::string> database{};
+    BlockChain* blockChain = nullptr;
     bool isSuperNode = false;
     std::string localURL;
     int localPort = 0;

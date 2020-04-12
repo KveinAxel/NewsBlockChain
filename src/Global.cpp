@@ -7,7 +7,6 @@ int Global::serverPort = 8000;
 Global::Global() {
     this->logger = new LOGGER::CLogger(LOGGER::LogLevel_Info,
                                        LOGGER::CLogger::GetAppAbsolutePath().append("log\\"));
-
 }
 
 Global::~Global() {
