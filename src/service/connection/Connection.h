@@ -2,6 +2,7 @@
 #define NEWS_BLOCK_CHAIN_CONNECTION_SERVICE_H
 #include <string>
 #include <Message.h>
+#include <vector>
 
 class Connection {
 public:
@@ -18,13 +19,6 @@ public:
     static Message<std::string> superNone();
 
     /**
-     * 从上级节点获取区块数据
-     * @param url
-     * @return
-     */
-    static Message<std::string> getBlockChainData(std::string url, int port);
-
-    /**
      * 将区块广播至普通节点
      * @param block
      * @return
@@ -37,6 +31,18 @@ public:
      * @return
      */
     static Message<std::string> broadcastBlockToDNS(std::string block);
+
+    /**
+     * 从零获取整条区块链
+     * @return
+     */
+    static Message<std::string> getBlockChain();
+
+    /**
+     * 增量更新区块链
+     * @return
+     */
+    static Message<std::string> getBlockChainPartly();
 };
 
 
