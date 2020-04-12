@@ -10,7 +10,7 @@ void GetBlockController::service(const httplib::Request &req, httplib::Response 
         rapidjson::Value resValue;
         rapidjson::Value value;
         rapidjson::Document document;
-        value.SetString(block->c_str(), document.GetAllocator());
+        value.SetString(block->first.c_str(), document.GetAllocator());
         resValue.SetObject();
         resValue.AddMember("message", "获取区块信息成功", document.GetAllocator());
         resValue.AddMember("data", value, document.GetAllocator());
