@@ -22,8 +22,8 @@ public:
      */
     void setDictionary(TrieDictionary *dictionary);
 
-    // todo 搜索函数（差其它组件配合还没写完）
     void Enter_Keywords(const std::vector<std::string> &keywords);
+
     SearchResult& Keyword_Search(const std::string &text);
 };
 

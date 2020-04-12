@@ -1,5 +1,6 @@
 #ifndef NEWS_BLOCK_CHAIN_BLOCK_CHAIN_BLOCK_H
 #define NEWS_BLOCK_CHAIN_BLOCK_CHAIN_BLOCK_H
+
 #include <ctime>
 #include <string>
 #include "MerkleTree.h"
@@ -57,7 +58,8 @@ public:
      * @param article
      * @param lastHashKey
      */
-    BlockObj(const std::vector<std::string> &article, std::string previousHash, std::string currentHash, size_t created_time);
+    BlockObj(const std::vector<std::string> &article, std::string previousHash, std::string currentHash,
+             size_t created_time);
 
     /**
      * 返回块头的的hash
@@ -80,7 +82,10 @@ public:
      */
     std::string serialize();
 
-    static BlockObj* deserialize(std::string block);
+    static BlockObj *deserialize(std::string block);
+
+    int searchKeyword(const std::vector<std::string> &keywords_list)
+
 };
 
 #endif // NEWS_BLOCK_CHAIN_BLOCK_CHAIN_BLOCK_H

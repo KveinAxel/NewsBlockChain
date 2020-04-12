@@ -75,3 +75,16 @@ BlockObj *BlockObj::deserialize(std::string block) {
 
 BlockObj::BlockObj(const std::vector<std::string> &article, std::string previousHash, std::string currentHash,
                    size_t created_time): article(article), previousHash(previousHash), currentHash(currentHash){ }
+
+int BlockObj::searchKeyword(const std::vector<std::string> &keywords_list) {
+    // todo
+    Searcher *searcherHandle = new SearcherImpl();
+    searcherHandle->Enter_Keywords(keywords_list);
+    std::string searchText;
+    for (int i = 0; i < BlockObj::article.size(); i++) {
+        searchText.append(article.at(i));
+    }
+    SearchResult &resultHandle = searcherHandle->Keyword_Search(searchText);//要改接口这里
+    int temp = resultHandle.Get_Total();
+    return temp;
+}
