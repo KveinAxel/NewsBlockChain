@@ -2,7 +2,10 @@
 #include "Hash.h"
 #include "QVector"
 #include "QQueue"
-QList<int> MerkleTree::modifyCheck(QList<std::string> article,QVector<std::string>* merkleIndex) {
+MerkleTree::~MerkleTree() {
+    //delete[] merkleIndex;
+}
+QList<int> MerkleTree::modifyCheck(QList<std::string> article) {
     int paraNum = article.size();
     QVector<TreeNode> nodeList;
     for(int i=0;i<paraNum;i++){
@@ -22,29 +25,31 @@ QList<int> MerkleTree::modifyCheck(QList<std::string> article,QVector<std::strin
         newTreeNode.left = i;
         newTreeNode.right = i+1;//这样改高效一点，以后编程也要尽量这样，时间上也差不多，应为文章段数比较小
         nodeList.push_back(newTreeNode);
-        if(nodeList.size() < i+2){
+        if(nodeList.size()==i+3){
             break;
         }
     }
     QList<int> output;
-    if(nodeList.last().hash == merkleIndex->last()){
+    if(nodeList.last().hash == this->nodeList.last().hash){
         return output;
     } else{
         QQueue<TreeNode> q;
-        q.push_back(nodeList[paraNum-1]);
+        if(nodeList.at(nodeList.last().left).hash!=this->nodeList.at(nodeList.last().left).hash)
+            q.push_back(nodeList.at(nodeList.last().left));
+        if(nodeList.at(nodeList.last().right).hash!=this->nodeList.at(nodeList.last().right).hash)
         do{
             TreeNode nextSearch = q.front();
             q.pop_front();
-            if(nodeList[nextSearch.left].hash != merkleIndex->at(nextSearch.left)){
-                if(nextSearch.left < article.size()){
-                    output.append(nextSearch.left+1);
+            if(nodeList[nextSearch.left].hash != this->nodeList[nextSearch.left].hash){
+                if(nodeList[nextSearch.left].left != -1){
+                    output.append(nextSearch.left);
                 }else{
                     q.push_back(nodeList[nextSearch.left]);
                 }
             }
-            if(nodeList[nextSearch.right].hash != merkleIndex->at(nextSearch.right)){
-                if(nextSearch.right < article.size()){
-                    output.append(nextSearch.right+1);
+            if(nodeList[nextSearch.right].hash != this->nodeList[nextSearch.right].hash){
+                if(nodeList[nextSearch.right].right != -1){
+                    output.append(nextSearch.right);
                 }else{
                     q.push_back(nodeList[nextSearch.right]);
                 }
@@ -53,9 +58,8 @@ QList<int> MerkleTree::modifyCheck(QList<std::string> article,QVector<std::strin
     }
     return output;
 }
-QVector<std::string>* MerkleTree::getMerkleArray(QList<std::string> article){
+MerkleTree::MerkleTree(const QList<std::string> article){
     int paraNum = article.size();
-    QVector<TreeNode> nodeList;
     for(int i=0;i<paraNum;i++){
         Hash hashCode(article.at(i));
 
@@ -63,24 +67,27 @@ QVector<std::string>* MerkleTree::getMerkleArray(QList<std::string> article){
         newTreeNode.hash = hashCode.toString();
 
         nodeList.push_back(newTreeNode);
+
     }
     for(int i=0;i<nodeList.size();i+=2){
         TreeNode newTreeNode;
         Hash hashCode(nodeList.at(i).hash+nodeList.at(i+1).hash);
         newTreeNode.hash = hashCode.toString();
         newTreeNode.left = i;
-        newTreeNode.right = i+1;//这样改高效一点，以后编程也要尽量这样，时间上也差不多，应为文章段数比较小
+        newTreeNode.right =i+1;//这样改高效一点，以后编程也要尽量这样，时间上也差不多，应为文章段数比较小
         nodeList.push_back(newTreeNode);
-        if(nodeList.size() < i+2){
+        if(nodeList.size()==i+3){
             break;
         }
     }
-    QVector<std::string>* merkleIndex;
-    merkleIndex = new QVector<std::string>;
-    for(int i=0;i<nodeList.size();i++){
-        merkleIndex->push_back(nodeList.at(i).hash);
-    }
-    return merkleIndex;
+//    merkleIndex = new string[nodeList.size()];
+//    for(int i=0;i<nodeList.size();i++){
+//        merkleIndex[i] = nodeList.at(i).hash;
+//    }
+    //return ID;
+}
+string MerkleTree::merkleRoot(){
+    return nodeList.last().hash;
 }
 
 //std::string * MerkleTree::getMerkleArray() {

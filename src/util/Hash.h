@@ -1,4 +1,4 @@
-#ifndef HASH_H
+﻿#ifndef HASH_H
 #define HASH_H
 
 #include <string>
@@ -25,8 +25,8 @@ class Hash{
 public:
     Hash();
     Hash(const string& message);
-    Hash(ifstream& in);
-    string toString();      //输出的是64位十六进制的字符串
+    void update(const string& message);   //可通过调用update来更换字符串
+    string toString();                    //输出的是64位十六进制的字符串
 
 protected:
     void set();
