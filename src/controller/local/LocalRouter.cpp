@@ -7,7 +7,8 @@
 #include "InitBlockChainController.h"
 #include "ContentController.h"
 #include "RegisterNodeController.h"
-
+#include <SaveController.h>
+#include <LoadController.h>
 
 void LocalRouter::routeRegister() {
     this->server->Get("/local/confirm", [](const httplib::Request &req, httplib::Response &res) {
@@ -33,6 +34,12 @@ void LocalRouter::routeRegister() {
     });
     this->server->Get("/local/node", [](const httplib::Request &req, httplib::Response &res) {
         RegisterNodeController().service(req, res);
+    });
+    this->server->Get("/local/save", [](const httplib::Request &req, httplib::Response &res) {
+        SaveController().service(req, res);
+    });
+    this->server->Get("/local/load", [](const httplib::Request &req, httplib::Response &res) {
+        LoadController().service(req, res);
     });
 
 }

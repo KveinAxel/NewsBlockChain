@@ -7,14 +7,12 @@
 
 int main(int argc, char *argv[]) {
     auto global = Global::getGlobal();
-    std::cout << "è¯·è¾“å…¥æœ¬æœºIP" << std::endl;
-    std::cin >> global->localURL;
-    std::cout << "è¯·è¾“å…¥æœ¬æœºç«¯å?" << std::endl;
+    std::cout << "ÇëÊäÈë±¾»ú¶Ë¿Ú" << std::endl;
     std::cin >> global->localPort;
-
+    global->localURL = "127.0.0.1";
     httplib::Server* svr = new httplib::Server;
     Router* router = new Router(svr);
     router->routeRegister();
-    svr->listen("localhost", 8001);
+    svr->listen("127.0.0.1", global->localPort);
     return 0;
 }
