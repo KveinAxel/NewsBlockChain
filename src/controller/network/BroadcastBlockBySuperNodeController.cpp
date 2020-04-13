@@ -16,7 +16,6 @@ void BroadcastBlockBySuperNodeController::service(const httplib::Request &req, h
             if (global->isSuperNode) {
                 for (auto i: global->ip_tables) {
                     Connection::broadcastBlockToNode(block, i.first, i.second);
-                    // todo 可选 处理返回结果
                 }
                 result(res, resValue);
             } else {

@@ -22,6 +22,7 @@ void ListHashController::service(const httplib::Request &req, httplib::Response 
                 item.AddMember("time", i.second, document.GetAllocator());
                 arr.PushBack(item, document.GetAllocator());
             }
+            delete vec;
         }
         resValue.AddMember("message", "列表获取成功", document.GetAllocator());
         resValue.AddMember("data", arr, document.GetAllocator());

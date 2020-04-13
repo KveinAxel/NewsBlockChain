@@ -14,7 +14,6 @@ void BroadcastBlockByNodeController::service(const httplib::Request &req, httpli
         if (serviceRes.code == 200) {
             resValue.AddMember("message", "接受广播成功", document.GetAllocator());
             Connection::broadcastBlockToDNS(block);
-            // todo 可选 处理返回结果
             result(res, resValue);
         } else {
             error(res, "400", serviceRes.msg);

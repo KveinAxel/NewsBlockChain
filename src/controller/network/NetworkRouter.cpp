@@ -1,5 +1,6 @@
 #include "NetworkRouter.h"
 #include "GetBlockPartlyController.h"
+#include "DeleteNodeController.h"
 #include <controller/network/BroadcastBlockByNodeController.h>
 #include <controller/network/BroadcastBlockBySuperNodeController.h>
 #include <controller/network/GetBlockController.h>
@@ -22,6 +23,9 @@ void NetworkRouter::routeRegister() {
     });
     this->server->Get("/network/getBlockPartly", [](const httplib::Request &req, httplib::Response &res) {
         GetBlockPartlyController().service(req, res);
+    });
+    this->server->Get("/network/deleteNode", [](const httplib::Request &req, httplib::Response &res) {
+        DeleteNodeController().service(req, res);
     });
 
 }

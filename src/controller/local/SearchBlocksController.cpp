@@ -25,6 +25,7 @@ void SearchBlocksController::service(const httplib::Request &req, httplib::Respo
                         arr.PushBack(rapidjson::Value(article.c_str(), document.GetAllocator()).Move(),
                                      document.GetAllocator());
                     }
+                    delete data;
                 }
                 resValue.AddMember("message", "查询成功", document.GetAllocator());
                 resValue.AddMember("data", arr, document.GetAllocator());
