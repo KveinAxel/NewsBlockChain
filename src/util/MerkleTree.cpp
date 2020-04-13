@@ -37,19 +37,20 @@ QList<int> MerkleTree::modifyCheck(QList<std::string> article) {
         if(nodeList.at(nodeList.last().left).hash!=this->nodeList.at(nodeList.last().left).hash)
             q.push_back(nodeList.at(nodeList.last().left));
         if(nodeList.at(nodeList.last().right).hash!=this->nodeList.at(nodeList.last().right).hash)
+            q.push_back(nodeList.at(nodeList.last().right));
         do{
             TreeNode nextSearch = q.front();
             q.pop_front();
             if(nodeList[nextSearch.left].hash != this->nodeList[nextSearch.left].hash){
                 if(nodeList[nextSearch.left].left != -1){
-                    output.append(nextSearch.left);
+                    output.append(nextSearch.left+1);
                 }else{
                     q.push_back(nodeList[nextSearch.left]);
                 }
             }
             if(nodeList[nextSearch.right].hash != this->nodeList[nextSearch.right].hash){
                 if(nodeList[nextSearch.right].right != -1){
-                    output.append(nextSearch.right);
+                    output.append(nextSearch.right+1);
                 }else{
                     q.push_back(nodeList[nextSearch.right]);
                 }
