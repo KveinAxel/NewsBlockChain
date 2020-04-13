@@ -2,10 +2,18 @@ dist: trusty
 sudo: false
 language: cpp
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-trusty-5.0
+    packages:
+      - g++-6
+      - clang-5.0
+
 before_install:
   - mkdir build
 
 script:
   - cmake .
-  - cd build
-  - cmake --build --target news_block_chain -- -j 4
+  - cmake --build .
