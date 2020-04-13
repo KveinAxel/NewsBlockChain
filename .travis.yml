@@ -6,6 +6,6 @@ before_install:
   - mkdir build
 
 script:
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake .
+  - cmake .
   - cd build
   - cmake --build . --target news_block_chain -- -j 4
