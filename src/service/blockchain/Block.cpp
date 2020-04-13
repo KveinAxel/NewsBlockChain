@@ -106,8 +106,9 @@ int BlockObj::searchKeyword(const std::vector<std::string> &keywords_list) {
     Searcher *searcherHandle = new SearcherImpl();
     searcherHandle->Enter_Keywords(keywords_list);
     std::string searchText;
-    for (int i = 0; i < BlockObj::article.size(); i++) {
-        searchText.append(article.at(i));
+    auto art = this->getArticle();
+    for (int i = 0; i < art->size(); i++) {
+        searchText.append(art->at(i));
     }
     SearchResult &resultHandle = searcherHandle->Keyword_Search(searchText);//要改接口这里
     int temp = resultHandle.Get_Total();

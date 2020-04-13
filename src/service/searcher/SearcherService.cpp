@@ -16,7 +16,7 @@ Message<std::vector<std::string>> SearcherService::search(std::vector<std::strin
     }
     int step = 1;
     auto itr2 = map.crbegin();
-    while (itr2 != map.crend() && step <= 2) {
+    while (itr2 != map.crend() && step <= 3) {
         rapidjson::Document document;
         rapidjson::Value resObj(rapidjson::kObjectType);
         rapidjson::Value currentHash(itr2->second->currentHash.c_str(), document.GetAllocator());

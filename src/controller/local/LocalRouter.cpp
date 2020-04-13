@@ -7,6 +7,8 @@
 #include "InitBlockChainController.h"
 #include "ContentController.h"
 #include "RegisterNodeController.h"
+#include "UpdateController.h"
+#include "UpdatePartlyController.h"
 #include <controller/local/SaveController.h>
 #include <controller/local/LoadController.h>
 
@@ -40,6 +42,12 @@ void LocalRouter::routeRegister() {
     });
     this->server->Get("/local/load", [](const httplib::Request &req, httplib::Response &res) {
         LoadController().service(req, res);
+    });
+    this->server->Get("/local/update", [](const httplib::Request &req, httplib::Response &res) {
+        UpdateController().service(req, res);
+    });
+    this->server->Get("/local/updatePartly", [](const httplib::Request &req, httplib::Response &res) {
+        UpdatePartlyController().service(req, res);
     });
 
 }
