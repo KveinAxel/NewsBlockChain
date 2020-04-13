@@ -6,10 +6,13 @@ BlockObj::~BlockObj() {
 }
 
 Message<std::vector<int>> BlockObj::modifyCheck(const std::vector<std::string> art) {
-    if (art.size() != this->article.size()) {
+    auto article = this->getArticle();
+    if (art.size() != article->size()) {
+        delete article;
         return Message<std::vector<int>>::fail(500, "文章分段不匹配");
     }
-    return merkletree->modifyCheck(art);
+    delete article;
+    return this->merkletree->modifyCheck(art);
 }
 
 BlockObj::BlockObj(const std::vector<std::string> &article, std::string previousHash) {
