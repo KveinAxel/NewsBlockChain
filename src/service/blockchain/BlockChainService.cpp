@@ -16,7 +16,8 @@ Message<std::string> BlockChainService::addToBlockChain(std::vector<std::string>
     if (global->isSuperNode) {
         Connection::broadcastBlockToDNS(global->blockChain->blockChainHash[global->blockChain->lastHash]->serialize());
     } else {
-        Connection::broadcastBlockToSuperNode(global->blockChain->blockChainHash[global->blockChain->lastHash]->serialize(),
+        if (global->ip_tables.size() != 0)
+            Connection::broadcastBlockToSuperNode(global->blockChain->blockChainHash[global->blockChain->lastHash]->serialize(),
                 global->ip_tables.begin()->first, global->ip_tables.begin()->second);
     }
     return Message<std::string>::success( "加入区块链成功，并获得该区块头的哈希", res);
