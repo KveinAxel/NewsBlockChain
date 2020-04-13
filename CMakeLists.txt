@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.9)
 
 # set the project name and version
 project(news_block_chain VERSION 1.0)

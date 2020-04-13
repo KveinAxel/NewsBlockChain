@@ -17,7 +17,7 @@ if (BUILD_TEST)
     target_link_libraries(unit_test gtest ${CMAKE_THREAD_LIBS_INIT})
     add_test(NAME "RunUnitTest"
             COMMAND "./unit_test")
-    #    add_coverage(unit_test)
+#        add_coverage(unit_test)
 
     if (MSVC)
         target_compile_options(unit_test PRIVATE /W4 /WX-)
