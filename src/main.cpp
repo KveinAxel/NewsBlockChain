@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     auto global = Global::getGlobal();
     std::cout << "请输入本机IP" << std::endl;
     std::cin >> global->localURL;
-    std::cout << "请输入本机端口" << std::endl;
+    std::cout << "请输入本机端�?" << std::endl;
     std::cin >> global->localPort;
 
     httplib::Server* svr = new httplib::Server;
