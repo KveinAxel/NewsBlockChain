@@ -8,4 +8,4 @@ before_install:
 script:
   - cmake .
   - cd build
-  - cmake --build . --target news_block_chain -- -j 4
+  - cmake --build --target news_block_chain -- -j 4
