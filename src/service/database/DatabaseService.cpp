@@ -1,19 +1,40 @@
 #include <Global.h>
 #include "DatabaseService.h"
+#include <fstream>
 
-Message<std::string> DatabaseService::saveBlock(std::string key, std::string value) {
+Message<std::string> DatabaseService::save() {
     auto global = Global::getGlobal();
-    global->database[key] = value;
-    return Message<std::string>::success("保存成功");
+    if (global->blockChain == nullptr) {
+        return Message<std::string>::fail(400, "无本地区块链");
+    } else {
+        std::ofstream out("blockchain.dat");
+        out << global->blockChain->serialize();
+        out.close();
+        return Message<std::string>::success("存储至硬盘成功");
+    }
 }
 
-Message<std::string> DatabaseService::getBlock(std::string key) {
+Message<std::string> DatabaseService::load() {
     auto global = Global::getGlobal();
-    auto itr = global->database.find(key);
-    if (itr == global->database.end()) {
-        return Message<std::string>::fail(400, "查找失败");
+    std::ifstream in("blockchain.dat");
+    if(in.is_open()) {
+        std::string str;
+        getline(in, str);
+        if (global->blockChain == nullptr) {
+            global->blockChain = BlockChain::deserialize(str);
+            return Message<std::string>::success("加载成功");
+        } else {
+            auto chain = BlockChain::deserialize(str);
+            if (chain->blockChainHash.size() > global->blockChain->blockChainHash.size()) {
+                delete global->blockChain;
+                global->blockChain = chain;
+                return Message<std::string>::success("加载成功");
+            } else {
+                delete chain;
+                return Message<std::string>::success("本地文件过于陈旧");
+            }
+        }
     } else {
-        std::string *str = new std::string(itr->second);
-        return Message<std::string>::success("查找成功", str);
+        return Message<std::string>::fail(400, "存储文件不存在");
     }
 }

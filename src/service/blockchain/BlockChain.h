@@ -51,7 +51,7 @@ public:
      * @param keyOfResponse
      * @return
      */
-    Message<std::pair<std::vector<std::string>, int>> responseBlockList(std::string key);
+    Message<std::pair<std::string, int>> responseBlockList(std::string key);
 
     std::string serialize();
 

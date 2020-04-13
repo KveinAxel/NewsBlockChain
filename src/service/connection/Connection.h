@@ -1,5 +1,6 @@
 #ifndef NEWS_BLOCK_CHAIN_CONNECTION_SERVICE_H
 #define NEWS_BLOCK_CHAIN_CONNECTION_SERVICE_H
+
 #include <string>
 #include <Message.h>
 #include <vector>
@@ -24,6 +25,15 @@ public:
      * @return
      */
     static Message<std::string> broadcastBlockToNode(std::string block, std::string url, int port);
+
+    /**
+     * 将区块广播至超级节点
+     * @param block
+     * @param url
+     * @param port
+     * @return
+     */
+    static Message<std::string> broadcastBlockToSuperNode(std::string block, std::string url, int port);
 
     /**
      * 将区块广播至DNS

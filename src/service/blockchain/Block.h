@@ -13,7 +13,6 @@
 #include <rapidjson/stringbuffer.h>
 #include <service/compressor/Compressor.h>
 
-// todo 压缩存储
 class BlockObj {
 public:
     /**
@@ -47,6 +46,21 @@ public:
     std::vector<std::string> article;
 
     /**
+     * 序列化字典
+     */
+    std::string serializedDict;
+
+    /**
+     * 数据压缩后的字节数组
+     */
+    std::vector<uint32_t> bytes;
+
+    /**
+     * 填充长度
+     */
+    uint32_t filler = 0;
+
+    /**
      * 文章构造区块
      * @param article
      * @param lastHashKey
@@ -59,7 +73,7 @@ public:
      * @param lastHashKey
      */
     BlockObj(const std::vector<std::string> &article, std::string previousHash, std::string currentHash,
-             size_t created_time);
+             time_t created_time);
 
     /**
      * 返回块头的的hash
@@ -86,6 +100,7 @@ public:
 
     int searchKeyword(const std::vector<std::string> &keywords_list);
 
+    std::vector<std::string>* getArticle();
 };
 
 #endif // NEWS_BLOCK_CHAIN_BLOCK_CHAIN_BLOCK_H

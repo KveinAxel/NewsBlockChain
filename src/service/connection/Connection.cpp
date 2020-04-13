@@ -61,6 +61,18 @@ Message<std::string> Connection::broadcastBlockToNode(std::string block, std::st
     }
 }
 
+Message<std::string> Connection::broadcastBlockToSuperNode(std::string block, std::string url, int port) {
+    auto global = Global::getGlobal();
+    auto cli = httplib::Client(url, port);
+    auto queryPath = "/network/broadcastBlockByNode?block=" + block;
+    auto res = cli.Get(queryPath.c_str());
+    if (res && res->status == 200) {
+        return Message<std::string>::success("广播至超级节点成功");
+    } else {
+        return Message<std::string>::fail(400, "广播至超级节点失败");
+    }
+}
+
 Message<std::string> Connection::broadcastBlockToDNS(std::string block) {
     auto global = Global::getGlobal();
     auto cli = httplib::Client(Global::serverURL, Global::serverPort);
@@ -103,24 +115,20 @@ Message<std::string> Connection::getBlockChain() {
         auto json = res->body;
         rapidjson::Document document;
         document.Parse(json.c_str());
-        if (document.IsObject()) {
-            if (global->isSuperNode) {
-                auto code = document.FindMember("code")->value.GetInt();
-                if (code == 200) {
-                    auto data = document.FindMember("data")->value.GetString();
-                    global->blockChain = BlockChain::deserialize(data);
-                    return Message<std::string>::success("获取区块成功");
-                }
-            } else {
+        if (global->isSuperNode) {
+            auto code = document.FindMember("code")->value.GetInt();
+            if (code == 200) {
                 auto data = document.FindMember("data")->value.GetString();
                 global->blockChain = BlockChain::deserialize(data);
                 return Message<std::string>::success("获取区块成功");
             }
+        } else {
+            auto &dataObj = document.FindMember("data")->value;
+            global->blockChain = BlockChain::deserialize(dataObj.FindMember("block")->value.GetString());
+            return Message<std::string>::success("获取区块成功");
         }
-        return Message<std::string>::fail(400, "获取区块失败");
-    } else {
-        return Message<std::string>::fail(400, "获取区块失败");
     }
+    return Message<std::string>::fail(400, "获取区块失败");
 }
 
 Message<std::string> Connection::getBlockChainPartly() {

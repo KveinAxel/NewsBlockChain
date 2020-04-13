@@ -18,8 +18,8 @@ Message<std::vector<int>> MerkleTree::modifyCheck(std::vector<std::string> artic
             // 取出不匹配节点
             TreeNode index = q.front();
             q.pop();
-            auto leftNode = nodeList.at(index.left);
-            auto rightNode = nodeList.at(index.right);
+            auto leftNode = newNodeList.at(index.left);
+            auto rightNode = newNodeList.at(index.right);
             if (leftNode.hash != this->nodeList.at(index.left).hash) {
                 if (leftNode.left == -1 && leftNode.right == -1)
                     output->push_back(index.left + 1);
@@ -45,18 +45,23 @@ MerkleTree::MerkleTree(const std::vector<std::string> article) {
         Hash hashCode(article.at(i));
         TreeNode newTreeNode;
         newTreeNode.hash = hashCode.toString();
+        newTreeNode.left = -1;
+        newTreeNode.right = -1;
         nodeList.push_back(newTreeNode);
     }
-    // 构建默克尔树非叶子节点
-    for (int i = 0; i < nodeList.size(); i += 2) {
-        TreeNode newTreeNode;
-        Hash hashCode(nodeList.at(i).hash + nodeList.at(i + 1).hash);
-        newTreeNode.hash = hashCode.toString();
-        newTreeNode.left = i;
-        newTreeNode.right = i + 1;
-        nodeList.push_back(newTreeNode);
-        if (nodeList.size() == i + 3) {
-            break;
+
+    if (paraNum != 1) {
+        // 构建默克尔树非叶子节点
+        for (int i = 0; i < nodeList.size(); i += 2) {
+            TreeNode newTreeNode;
+            Hash hashCode(nodeList.at(i).hash + nodeList.at(i + 1).hash);
+            newTreeNode.hash = hashCode.toString();
+            newTreeNode.left = i;
+            newTreeNode.right = i + 1;
+            nodeList.push_back(newTreeNode);
+            if (nodeList.size() == i + 3) {
+                break;
+            }
         }
     }
 }

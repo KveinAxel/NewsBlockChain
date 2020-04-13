@@ -3,7 +3,7 @@
 #include <util/StringUtil.h>
 #include "BlockChainService.h"
 
-Message<std::string> BlockChainService::addToBlockChain(std::string article) {
+Message<std::string> BlockChainService::addToBlockChain(std::vector<std::string> article) {
     auto global = Global::getGlobal();
     if (global->blockChain == nullptr) {
         auto res = Connection::getBlockChain();
@@ -11,13 +11,18 @@ Message<std::string> BlockChainService::addToBlockChain(std::string article) {
             return Message<std::string>::fail(400, "本地无法加载区块链");
         }
     }
-    auto articleVec = stringSplit(article, "\n");
-    auto currentHash = global->blockChain->appendBlock(articleVec);
+    auto currentHash = global->blockChain->appendBlock(article);
     std::string *res = new std::string(currentHash);
+    if (global->isSuperNode) {
+        Connection::broadcastBlockToDNS(global->blockChain->blockChainHash[global->blockChain->lastHash]->serialize());
+    } else {
+        Connection::broadcastBlockToSuperNode(global->blockChain->blockChainHash[global->blockChain->lastHash]->serialize(),
+                global->ip_tables.begin()->first, global->ip_tables.begin()->second);
+    }
     return Message<std::string>::success( "加入区块链成功，并获得该区块头的哈希", res);
 }
 
-Message<std::vector<int>> BlockChainService::confirmArticle(std::string article, std::string hash) {
+Message<std::vector<int>> BlockChainService::confirmArticle(std::vector<std::string> article, std::string hash) {
     auto global = Global::getGlobal();
     if (global->blockChain == nullptr) {
         auto res = Connection::getBlockChain();
@@ -25,8 +30,7 @@ Message<std::vector<int>> BlockChainService::confirmArticle(std::string article,
             return Message<std::vector<int>>::fail(400, "本地无法加载区块链");
         }
     }
-    auto articleVec = stringSplit(article, "\n");
-    return global->blockChain->modifyCheckLocal(articleVec, hash);
+    return global->blockChain->modifyCheckLocal(article, hash);
 }
 
 Message<std::vector<std::pair<std::string, time_t>>> BlockChainService::list() {
@@ -83,7 +87,7 @@ Message<std::vector<std::string>> BlockChainService::getBlockHeadHashList() {
     return Message<std::vector<std::string>>::success("获取区块头列表成功", res);
 }
 
-Message<std::pair<std::vector<std::string>, int>> BlockChainService::getBlockList(std::string key) {
+Message<std::pair<std::string, int>> BlockChainService::getBlockList(std::string key) {
     auto global = Global::getGlobal();
     if (global->blockChain == nullptr) {
         auto res = Connection::getBlockChain();
@@ -92,4 +96,23 @@ Message<std::pair<std::vector<std::string>, int>> BlockChainService::getBlockLis
         }
     }
     return global->blockChain->responseBlockList(key);
+}
+
+Message<std::vector<std::string>> BlockChainService::getContent(std::string hash) {
+    auto global = Global::getGlobal();
+    if (global->blockChain == nullptr) {
+        auto res = Connection::getBlockChain();
+        if (res.code != 200) {
+            Message<std::vector<std::string>>::fail(400, "本地无法加载区块链");
+        }
+    }
+    auto itr = global->blockChain->blockChainHash.find(hash);
+    if (itr != global->blockChain->blockChainHash.end()) {
+        auto art = itr->second->getArticle();
+        std::vector<std::string> *newVec = new std::vector<std::string>(*art);
+        delete art;
+        return Message<std::vector<std::string>>::success("获取成功", newVec);
+    } else {
+        return Message<std::vector<std::string>>::fail(400, "区块不存在");
+    }
 }

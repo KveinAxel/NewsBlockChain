@@ -5,9 +5,9 @@
 
 class DatabaseService {
 public:
-    static Message<std::string> saveBlock(std::string key, std::string value);
+    static Message<std::string> save();
 
-    static Message<std::string> getBlock(std::string key);
+    static Message<std::string> load();
 };
 
 

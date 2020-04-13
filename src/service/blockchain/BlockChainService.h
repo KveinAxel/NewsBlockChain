@@ -12,14 +12,14 @@ public:
      * @param article 文章
      * @return 返回结果被含成功与否，如果失败请说明原因
      */
-    static Message<std::string> addToBlockChain(std::string article);
+    static Message<std::string> addToBlockChain(std::vector<std::string> article);
 
     /**
      * 传入一篇文章，返回是否篡改
      * @param article 文章
      * @return 无篡改返回200， 有篡改返回400， 其他事件返回500
      */
-    static Message<std::vector<int>> confirmArticle(std::string article, std::string hash);
+    static Message<std::vector<int>> confirmArticle(std::vector<std::string> article, std::string hash);
 
     /**
      * 获取所有区块头哈希及时间的列表
@@ -50,7 +50,9 @@ public:
       * @param keyList
       * @return
       */
-     static Message<std::pair<std::vector<std::string>, int>> getBlockList(std::string key);
+     static Message<std::pair<std::string, int>> getBlockList(std::string key);
+
+     static Message<std::vector<std::string>> getContent(std::string hash);
 };
 
 
