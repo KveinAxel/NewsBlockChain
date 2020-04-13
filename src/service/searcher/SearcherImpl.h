@@ -25,6 +25,8 @@ public:
     void Enter_Keywords(const std::vector<std::string> &keywords);
 
     SearchResult& Keyword_Search(const std::string &text);
+
+    ~SearcherImpl();
 };
 
 

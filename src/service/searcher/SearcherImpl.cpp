@@ -26,3 +26,7 @@ SearchResult &SearcherImpl::Keyword_Search(const std::string &text) {
     result->insert(sum, loca);
     return *result;
 }
+
+SearcherImpl::~SearcherImpl() {
+    delete this->dictionary;
+}

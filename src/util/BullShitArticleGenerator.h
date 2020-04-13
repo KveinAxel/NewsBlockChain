@@ -5,7 +5,7 @@
 
 class BullShitArticleGenerator {
 public:
-    static std::string generator();
+    static std::string generator(unsigned seed);
 };
 
 

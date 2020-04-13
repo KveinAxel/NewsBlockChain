@@ -163,8 +163,8 @@ std::string giveMeTheQuotes() {
     return res;
 }
 
-std::string BullShitArticleGenerator::generator() {
-    srand((unsigned) time(NULL));
+std::string BullShitArticleGenerator::generator(unsigned seed) {
+    srand(seed);
     int para = rand() % 10 + 2;
     std::string contain;
     for (int i = 0; i < para; i++) {
