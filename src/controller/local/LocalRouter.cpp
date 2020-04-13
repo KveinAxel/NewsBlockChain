@@ -7,8 +7,8 @@
 #include "InitBlockChainController.h"
 #include "ContentController.h"
 #include "RegisterNodeController.h"
-#include <SaveController.h>
-#include <LoadController.h>
+#include <controller/local/SaveController.h>
+#include <controller/local/LoadController.h>
 
 void LocalRouter::routeRegister() {
     this->server->Get("/local/confirm", [](const httplib::Request &req, httplib::Response &res) {

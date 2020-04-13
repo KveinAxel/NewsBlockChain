@@ -122,7 +122,7 @@ std::vector<std::string>* BlockObj::getArticle() {
         compressor.decompress();
         std::stringstream ss(compressor.getData());
         std::string str;
-        auto *art = ;
+        auto *art = new std::vector<std::string>;
         while (std::getline(ss, str)) {
             art->push_back(str);
         }
