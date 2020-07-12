@@ -6,17 +6,17 @@
 
 *排名不分先后*
 
-吴非凡（@KveinAxel）
+@KveinAxel
 
-潘若彤（@panruotong）
+@panruotong
 
-童诗雨（@Olivia0206）
+@Olivia0206
 
-吕民轩（@XuanLaoYee）
+@XuanLaoYee
 
-李畅（@lichangguisheng）
+@lichangguisheng
 
-魏武才（@DctorWei1314）
+@DctorWei1314
 
 ## 如何使用
 
